@@ -68,7 +68,7 @@ class MarkdownBlock():
 
         for i in range(0, len(levelList)):
             # 1,2
-            title = lines[levelList[i]][sonLevel + 1:].strip()
+            title = lines[levelList[i]].strip()[sonLevel + 1:].strip()
             start = levelList[i] + 1
             if i == len(levelList) - 1:
                 end = len(lines)
@@ -95,6 +95,9 @@ class MarkdownBlock():
             new_son.parseSon()
 
         # code = mkString(lines[end:])
+
+    def isLeaf(self):
+        return len(self.son) == 0
 
 
 def parseTitle(lines, depth):
@@ -169,6 +172,18 @@ rootEle = getRoot(md)
 rootEle.parseSon()
 
 
+def OutPutStruct(node):
+    spaces = " " * node.depth
+    jing = "#" * node.depth
+    title = node.title
+    if len(title) == 0:
+        title = "[空]"
 
+    print(spaces + jing + " " + title)
+    for i in node.son:
+        OutPutStruct(i)
+
+
+OutPutStruct(rootEle)
 
 print()
