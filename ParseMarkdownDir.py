@@ -1,6 +1,8 @@
 import re
 import os
 
+import time
+
 md = """
 32
 321
@@ -200,9 +202,9 @@ def OutPutStruct(node):
 
 def OutPutTitleTodoList(node):
     re = ""
-    spaces = " " * node.depth
+    spaces = "\t" * node.depth
     # jing = "#" * node.depth
-    jing = "- []"
+    jing = "- [ ]"
 
     title = node.title
     if len(title) == 0:
@@ -234,12 +236,23 @@ with open(path, encoding='utf-8') as file_obj:
     md = contents.rstrip()
 
 rootEle = getRoot(md)
-
+rootEle.title = filename
 rootEle.parseSon()
 
 todoText = OutPutTitleTodoList(rootEle)
 print(todoText)
-f = open(dir + "\\" + filename + ".todo.md", "w", encoding='utf-8')
+todofilename = filename + ".todo.md"
+todoFilePath = dir + "\\" + todofilename
+if os.path.isfile(todoFilePath):
+    # ctime = time.localtime(os.path.getctime(todoFilePath))
+    mtime = time.localtime(os.path.getmtime(todoFilePath))
+    mtime = time.strftime("%Y-%m-%d-%H-%M-%S", mtime)
+    print("发现旧的todo文件，修改日期：")
+    print(mtime)
+    newname = "(" + mtime + ")" + todofilename
+    os.rename(todoFilePath, dir + "\\" + newname)
+
+f = open(todoFilePath, "w", encoding='utf-8')
 f.write(todoText)
 f.close()
 
@@ -297,12 +310,15 @@ def findCCode(node):
             if not os.path.isdir(saveDir):
                 os.makedirs(saveDir)
 
-            f = open(saveDir + "\\" + title + countStr + ".c"
-                     , "w", encoding='utf-8')
-            ccode = blockStr.strip()
-            ccode = handleCCode(ccode)
-            f.write(ccode)
-            f.close()
+            filePath = saveDir + "\\" + title + countStr + ".c"
+            if not os.path.isfile(filePath):
+                f = open(filePath, "w", encoding='utf-8')
+                ccode = blockStr.strip()
+                ccode = handleCCode(ccode)
+                f.write(ccode)
+                f.close()
+            else:
+                pass
 
     for i in node.son:
         findCCode(i)
