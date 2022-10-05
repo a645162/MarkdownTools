@@ -1,4 +1,5 @@
 import re
+import os
 
 md = """
 32
@@ -150,6 +151,14 @@ def mkString(lines):
     return text.strip()
 
 
+def pathAddDot(path):
+    path = str(path).strip()
+    re = ""
+    for i in path:
+        re += "." + i
+    return re[1:]
+
+
 def getRoot(text):
     lines = text.split("\n")
 
@@ -167,11 +176,6 @@ def getRoot(text):
     return rootEle
 
 
-rootEle = getRoot(md)
-
-rootEle.parseSon()
-
-
 def OutPutStruct(node):
     spaces = " " * node.depth
     jing = "#" * node.depth
@@ -179,11 +183,92 @@ def OutPutStruct(node):
     if len(title) == 0:
         title = "[空]"
 
-    print(spaces + jing + " " + title)
+    path = pathAddDot(node.path)
+
+    print(spaces + jing + " " + path + " " + title)
+
+    # if len(node.inner_text) > 0:
+    #     lines = node.inner_text.split("\n")
+    #     for i in lines:
+    #         print(spaces * 2 + " " + i)
+    #     # print(node.inner_text)
+
+    # 遍历子节点DFS
     for i in node.son:
         OutPutStruct(i)
 
 
-OutPutStruct(rootEle)
+def OutPutTitleTodoList(node):
+    spaces = " " * node.depth
+    # jing = "#" * node.depth
+    jing = "- []"
+
+    title = node.title
+    if len(title) == 0:
+        title = "[空]"
+
+    path = pathAddDot(node.path)
+
+    print(spaces + jing + " " + path + " " + title)
+
+    # if len(node.inner_text) > 0:
+    #     lines = node.inner_text.split("\n")
+    #     for i in lines:
+    #         print(spaces * 2 + " " + i)
+    #     # print(node.inner_text)
+
+    # 遍历子节点DFS
+    for i in node.son:
+        OutPutTitleTodoList(i)
+
+
+dir = "C:\\Users\\konghaomin\\CLionProjects\\23nuist816\\nuist816\\7.Graph图"
+path = dir + "\\7.Graph图.md"
+
+with open(path, encoding='utf-8') as file_obj:
+    contents = file_obj.read()
+    md = contents.rstrip()
+
+rootEle = getRoot(md)
+
+rootEle.parseSon()
+
+
+# OutPutTitleTodoList(rootEle)
+
+def findCCode(node):
+    structPath = pathAddDot(node.path)+"."
+    blocks = node.inner_text.split("```C")
+
+    if len(blocks) >= 1:
+        title = node.title
+        if len(title) == 0:
+            title = "[空]"
+
+        count = 0
+        for i in blocks:
+            blockStr = i
+            index = blockStr.rfind("```")
+            if index == -1:
+                continue
+            blockStr = blockStr[:index]
+
+            countStr = ""
+
+            count += 1
+
+            if count > 1:
+                countStr = str(count)
+
+            f = open(dir + "\\"+ title + countStr + ".c"
+                     , "w", encoding='utf-8')
+            f.write(blockStr)
+            f.close()
+
+    for i in node.son:
+        findCCode(i)
+
+
+findCCode(rootEle)
 
 print()
