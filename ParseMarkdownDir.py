@@ -48,7 +48,7 @@ class MarkdownBlock():
             if len(levelList) == 0:
                 searchRange = len(lines)
             else:
-                searchRange = levelList[0] - 1
+                searchRange = levelList[0]
 
             for i in range(0, searchRange):
                 if isTitle(lines[i]):
@@ -56,8 +56,9 @@ class MarkdownBlock():
                     break
 
             if titleLine >= 0:
+                # 找到第一个标题行了
                 title = ""
-                InnerText = mkString(lines[:titleLine - 1])
+                InnerText = mkString(lines[0:titleLine])
                 code = mkString(lines[titleLine:searchRange])
                 sonCount += 1
                 new_son = \
@@ -67,20 +68,25 @@ class MarkdownBlock():
 
         for i in range(0, len(levelList)):
             # 1,2
-            title = lines[levelList[i]][sonLevel + 1].strip()
+            title = lines[levelList[i]][sonLevel + 1:].strip()
             start = levelList[i] + 1
             if i == len(levelList) - 1:
                 end = len(lines)
             else:
-                end = levelList[i + 1] - 1
+                end = levelList[i + 1]
+
             titleLine = -1
             for i in range(start, end):
                 if isTitle(lines[i]):
                     titleLine = i
                     break
 
-            InnerText = mkString(lines[start:titleLine - 1])
-            code = mkString(lines[titleLine:end])
+            if titleLine >= 0:
+                InnerText = mkString(lines[start:titleLine])
+                code = mkString(lines[titleLine:end])
+            else:
+                InnerText = mkString(lines[start: end])
+                code = ""
 
             sonCount += 1
             new_son = \
@@ -132,6 +138,9 @@ def isDepth(text, depth=1):
 
 
 def mkString(lines):
+    if len(lines) == 0:
+        return ""
+
     text = ""
     for line in lines:
         text += "\n" + line
@@ -158,5 +167,8 @@ def getRoot(text):
 rootEle = getRoot(md)
 
 rootEle.parseSon()
+
+
+
 
 print()
