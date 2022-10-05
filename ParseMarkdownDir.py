@@ -199,6 +199,7 @@ def OutPutStruct(node):
 
 
 def OutPutTitleTodoList(node):
+    re = ""
     spaces = " " * node.depth
     # jing = "#" * node.depth
     jing = "- []"
@@ -209,7 +210,7 @@ def OutPutTitleTodoList(node):
 
     path = pathAddDot(node.path)
 
-    print(spaces + jing + " " + path + " " + title)
+    re += spaces + jing + " " + path + " " + title + "\n"
 
     # if len(node.inner_text) > 0:
     #     lines = node.inner_text.split("\n")
@@ -219,11 +220,14 @@ def OutPutTitleTodoList(node):
 
     # 遍历子节点DFS
     for i in node.son:
-        OutPutTitleTodoList(i)
+        re += OutPutTitleTodoList(i)
+
+    return re
 
 
 dir = "C:\\Users\\konghaomin\\CLionProjects\\23nuist816\\nuist816\\7.Graph图"
-path = dir + "\\7.Graph图.md"
+filename = "7.Graph图.md"
+path = dir + "\\" + filename
 
 with open(path, encoding='utf-8') as file_obj:
     contents = file_obj.read()
@@ -233,11 +237,40 @@ rootEle = getRoot(md)
 
 rootEle.parseSon()
 
+todoText = OutPutTitleTodoList(rootEle)
+print(todoText)
+f = open(dir + "\\" + filename + ".todo.md", "w", encoding='utf-8')
+f.write(todoText)
+f.close()
 
-# OutPutTitleTodoList(rootEle)
+
+def handleCCode(codeText):
+    lines = codeText.split("\n")
+    re = ""
+    for line in lines:
+
+        if line.strip().find("//") > 0:
+            index = line.find("//")
+            lline = line[:index].rstrip()
+
+            # 继承缩进
+            lline1 = lline.strip()
+            spaces = lline[:len(lline) - len(lline1)]
+
+            rline = line[index:].strip()
+
+            re += spaces + rline + "\n"
+            # print()
+        else:
+            lline = line
+
+        re += lline + "\n"
+
+    return re
+
 
 def findCCode(node):
-    structPath = pathAddDot(node.path)+"."
+    structPath = pathAddDot(node.path) + "."
     blocks = node.inner_text.split("```C")
 
     if len(blocks) >= 1:
@@ -260,9 +293,15 @@ def findCCode(node):
             if count > 1:
                 countStr = str(count)
 
-            f = open(dir + "\\"+ title + countStr + ".c"
+            saveDir = dir + "\\Algorithms"
+            if not os.path.isdir(saveDir):
+                os.makedirs(saveDir)
+
+            f = open(saveDir + "\\" + title + countStr + ".c"
                      , "w", encoding='utf-8')
-            f.write(blockStr)
+            ccode = blockStr.strip()
+            ccode = handleCCode(ccode)
+            f.write(ccode)
             f.close()
 
     for i in node.son:
