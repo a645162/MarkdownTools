@@ -49,7 +49,7 @@ for img_code in allImgCode:
         new_img_code = img_code.replace(url, "img/" + file_name)
         print(new_img_code)
 
-        testCode.replace(img_code, new_img_code)
+        testCode = testCode.replace(img_code, new_img_code)
 
 print(testCode)
 
