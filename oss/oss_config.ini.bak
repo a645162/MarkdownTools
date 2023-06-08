@@ -1,0 +1,13 @@
+[aliyun]
+accessKeyId =
+accessKeySecret =
+
+[bucket]
+bucketName =
+parameters =
+region =
+domain =
+
+[program]
+target_base_path = md_pic
+max_parent_level = 2

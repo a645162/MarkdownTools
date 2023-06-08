@@ -227,8 +227,8 @@ def OutPutTitleTodoList(node):
     return re
 
 
-dir = "C:\\Users\\konghaomin\\CLionProjects\\23nuist816\\nuist816\\7.Graph图"
-filename = "7.Graph图.md"
+dir = r"D:\Prj\23nuist816\nuist816\9.Sort"
+filename = r"9.Sort排序.md"
 path = dir + "\\" + filename
 
 with open(path, encoding='utf-8') as file_obj:
@@ -287,7 +287,7 @@ def findCCode(node):
     blocks = node.inner_text.split("```C")
 
     if len(blocks) >= 1:
-        title = node.title
+        title = node.title.replace("*","")
         if len(title) == 0:
             title = "[空]"
 
