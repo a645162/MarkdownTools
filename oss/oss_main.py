@@ -5,6 +5,7 @@
 @Author :   Haomin Kong
 @IDE    :   Pycharm
 """
+import sys
 
 import oss2
 import os
@@ -24,13 +25,14 @@ auth = oss2.Auth(oss_config.accessKeyId, oss_config.accessKeySecret)
 # # Endpoint以杭州为例，其它Region请按实际情况填写。
 bucket = oss2.Bucket(auth, oss_config.server_url, oss_config.bucketName)
 
+
 # 设置存储空间为私有读写权限。
 # bucket.create_bucket(oss2.models.BUCKET_ACL_PUBLIC_READ)
 
-md_path = r'H:\Prj\MarkdownTools\oss\test\testmd.md'
 
+# md_path = r'H:\Prj\MarkdownTools\oss\test\testmd.md'
 
-def parse_md_file(md_path, max_parent_level):
+def parse_md_file(md_path, md_code, max_parent_level):
     # md 文件信息获取
     # md_path = r'H:\testmd.md'
     md_file_name = os.path.basename(md_path)
@@ -41,14 +43,6 @@ def parse_md_file(md_path, max_parent_level):
     while len(os.path.basename(tmp_md_dir_path)) > 0:
         md_parent.append(os.path.basename(tmp_md_dir_path))
         tmp_md_dir_path = os.path.dirname(tmp_md_dir_path)
-
-    md_code = ""
-    try:
-        f = open(md_path)
-        md_code = f.read()
-        f.close()
-    except Exception as e:
-        print(e.args)
 
     # md文件解析
     img_list = []
@@ -84,7 +78,8 @@ def parse_md_file(md_path, max_parent_level):
             }
         )
 
-    return {'md_dir_path': md_dir_path,
+    return {'md_path': md_path,
+            'md_dir_path': md_dir_path,
             'md_file_name': md_file_name,
             'img_list': img_list}
 
@@ -92,7 +87,7 @@ def parse_md_file(md_path, max_parent_level):
 def upload_pic(md_info):
     img_list = md_info['img_list']
 
-    final_result = []
+    upload_results = []
 
     for img_info in img_list:
         local_path = img_info['img_absolute_path']
@@ -105,27 +100,98 @@ def upload_pic(md_info):
              'remote_url': remote_url, 'upload': False, 'ori_relative_path': img_info['ori_relative_path']}
 
         # 这句话调试的时候用于添加错误，模拟错误！
-        remote_path = "/" + remote_path
+        # remote_path = "/" + remote_path
 
         print((remote_path, local_path))
         try:
-            bucket.put_object_from_file(remote_path, local_path)
+            if bucket.object_exists(remote_path):
+                print("文件已经存在", local_path)
+            else:
+                bucket.put_object_from_file(remote_path, local_path)
             print(remote_url)
             d['upload'] = True
             print()
         except Exception as e:
             print("上传出错！", local_path)
 
-        final_result.append(d)
+        upload_results.append(d)
     print()
 
+    return {'md_path': md_info['md_path'],
+            'md_dir_path': md_info['md_dir_path'],
+            'md_file_name': md_info['md_file_name'],
+            'upload_results': upload_results}
 
-def modify_md_file(md_path, final_result):
-    pass
+
+def modify_md_file(upload_info, md_code):
+    md_path = upload_info['md_path']
+
+    if len(md_code) == 0:
+        return
+
+    new_md_path = md_path + ".upload.md"
+
+    upload_results = upload_info['upload_results']
+    for upload_result in upload_results:
+        ori_relative_path = upload_result['ori_relative_path']
+        if upload_result['upload']:
+            md_code = md_code.replace(ori_relative_path, upload_result['remote_url'])
+        else:
+            print("出现致命错误！")
+            print(upload_result)
+            print(upload_results)
+            print(upload_info)
+
+    try:
+        f = open(new_md_path, encoding='utf-8', mode='w')
+        f.write(md_code)
+        f.close()
+        print(new_md_path)
+        print("写出成功！")
+    except Exception as e:
+        print(e.args)
 
 
-md_info = parse_md_file(md_path=md_path, max_parent_level=oss_config.max_parent_level)
-upload_pic(md_info)
+def doall(md_path):
+    print("开始", md_path)
 
-print()
+    from chardet.universaldetector import UniversalDetector
+    detector = UniversalDetector()
+    detector.reset()
+    for each in open(md_path, 'rb'):
+        detector.feed(each)
+        if detector.done:
+            break
+    detector.close()
+    file_encoding = detector.result['encoding']
+    confidence = detector.result['confidence']
+
+    if confidence < 0.75:
+        file_encoding = 'utf-8'
+
+    md_code = ""
+    try:
+        f = open(md_path, mode='r', encoding=file_encoding)
+        md_code = f.read()
+        f.close()
+    except Exception as e:
+        print(e.args)
+
+    md_info = parse_md_file(md_path=md_path, max_parent_level=oss_config.max_parent_level, md_code=md_code)
+    upload_info = upload_pic(md_info=md_info)
+    modify_md_file(upload_info=upload_info, md_code=md_code)
+
+
+if __name__ == '__main__':
+
+    if len(sys.argv) == 1:
+        print("请将路径作为参数传入！")
+
+    for i in range(1, len(sys.argv)):
+        md_path = sys.argv[i]
+        print(md_path)
+        if os.path.exists(md_path):
+            doall(md_path)
+
+# print()
 # bucket.put_object_from_file('<yourObjectName>', 'img_path')
