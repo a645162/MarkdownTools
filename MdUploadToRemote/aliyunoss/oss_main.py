@@ -30,7 +30,7 @@ bucket = oss2.Bucket(auth, oss_config.server_url, oss_config.bucketName)
 # bucket.create_bucket(oss2.models.BUCKET_ACL_PUBLIC_READ)
 
 
-# md_path = r'H:\Prj\MarkdownTools\oss\test\testmd.md'
+# md_path = r'H:\Prj\MarkdownTools\aliyunoss\test\testmd.md'
 
 def parse_md_file(md_path, md_code, max_parent_level):
     # md 文件信息获取
