@@ -184,11 +184,13 @@ def doall(md_path):
 
 if __name__ == '__main__':
 
-    if len(sys.argv) == 1:
+    files_list = sys.argv[1:]
+    files_list.append(r'H:\Prj\MarkdownTools\MdUploadToRemote\test\testmd.md')
+
+    if len(files_list) == 0:
         print("请将路径作为参数传入！")
 
-    for i in range(1, len(sys.argv)):
-        md_path = sys.argv[i]
+    for md_path in files_list:
         print(md_path)
         if os.path.exists(md_path):
             doall(md_path)

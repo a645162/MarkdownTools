@@ -7,30 +7,23 @@
 """
 import sys
 
-import oss2
-import os
-import oss_config
-import re
 import utils
+import os
 
-oss_config = oss_config.OssConfig()
+import re
+from config import upload_config
+from service.aliyunoss.oss_upload import OssUpload
+
+upload_config = upload_config.UploadConfig()
 
 re_md_pic = re.compile(r'!\[.*\]\(.+\..+\)')
 re_md_pic_other = re.compile(r'\(.+\..+\)')
 
-# 上传逻辑
+if upload_config.type == '1':
+    pass
+updateObj = OssUpload()
+upload_pic = updateObj.upload_pic
 
-# 阿里云账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM用户进行API访问或日常运维，请登录RAM控制台创建RAM用户。
-auth = oss2.Auth(oss_config.accessKeyId, oss_config.accessKeySecret)
-# # Endpoint以杭州为例，其它Region请按实际情况填写。
-bucket = oss2.Bucket(auth, oss_config.server_url, oss_config.bucketName)
-
-
-# 设置存储空间为私有读写权限。
-# bucket.create_bucket(oss2.models.BUCKET_ACL_PUBLIC_READ)
-
-
-# md_path = r'H:\Prj\MarkdownTools\aliyunoss\test\testmd.md'
 
 def parse_md_file(md_path, md_code, max_parent_level):
     # md 文件信息获取
@@ -82,45 +75,6 @@ def parse_md_file(md_path, md_code, max_parent_level):
             'md_dir_path': md_dir_path,
             'md_file_name': md_file_name,
             'img_list': img_list}
-
-
-def upload_pic(md_info):
-    img_list = md_info['img_list']
-
-    upload_results = []
-
-    for img_info in img_list:
-        local_path = img_info['img_absolute_path']
-        remote_path = oss_config.target_base_path + img_info['target_path']
-        if remote_path.startswith("/"):
-            remote_path = remote_path[1:]
-        remote_url = oss_config.domain + "/" + remote_path + oss_config.parameters
-
-        d = {'local_path': local_path, 'remote_path': remote_path,
-             'remote_url': remote_url, 'upload': False, 'ori_relative_path': img_info['ori_relative_path']}
-
-        # 这句话调试的时候用于添加错误，模拟错误！
-        # remote_path = "/" + remote_path
-
-        print((remote_path, local_path))
-        try:
-            if bucket.object_exists(remote_path):
-                print("文件已经存在", local_path)
-            else:
-                bucket.put_object_from_file(remote_path, local_path)
-            print(remote_url)
-            d['upload'] = True
-            print()
-        except Exception as e:
-            print("上传出错！", local_path)
-
-        upload_results.append(d)
-    print()
-
-    return {'md_path': md_info['md_path'],
-            'md_dir_path': md_info['md_dir_path'],
-            'md_file_name': md_info['md_file_name'],
-            'upload_results': upload_results}
 
 
 def modify_md_file(upload_info, md_code):
@@ -177,18 +131,20 @@ def doall(md_path):
     except Exception as e:
         print(e.args)
 
-    md_info = parse_md_file(md_path=md_path, max_parent_level=oss_config.max_parent_level, md_code=md_code)
+    md_info = parse_md_file(md_path=md_path, max_parent_level=upload_config.max_parent_level, md_code=md_code)
     upload_info = upload_pic(md_info=md_info)
     modify_md_file(upload_info=upload_info, md_code=md_code)
 
 
 if __name__ == '__main__':
 
-    if len(sys.argv) == 1:
+    files_list = sys.argv[1:]
+    files_list.append(r'H:\Prj\MarkdownTools\MdUploadToRemote\test\testmd.md')
+
+    if len(files_list) == 0:
         print("请将路径作为参数传入！")
 
-    for i in range(1, len(sys.argv)):
-        md_path = sys.argv[i]
+    for md_path in files_list:
         print(md_path)
         if os.path.exists(md_path):
             doall(md_path)
