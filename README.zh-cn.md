@@ -1,6 +1,11 @@
 # Markdown 工具箱
 
+[English Version](README.md)
+
 Author: Haomin Kong
+
+[GitHub](https://github.com/a645162/MarkdownTools)
+[Gitee](https://gitee.com/a645162/markdown-tools)
 
 ## 功能列表
 
