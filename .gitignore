@@ -6,3 +6,6 @@ MdUploadToRemote/__pycache__/
 MdUploadToRemote/config/__pycache__/
 MdUploadToRemote/service/__pycache__/__init__.cpython-311.pyc
 MdUploadToRemote/service/qiniuyun/__pycache__/qiniu_config.cpython-311.pyc
+MdUploadToRemote/service/qiniuyun/__pycache__/
+*/.qiniu_pythonsdk_hostscache.json
+MdUploadToRemote/test/testmd.md.upload.md

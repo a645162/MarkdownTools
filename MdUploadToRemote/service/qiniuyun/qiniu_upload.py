@@ -1,27 +1,30 @@
 # -*- coding: utf-8 -*-
 """
-@File   :   oss_upload.py
+@File   :   qiniu_upload.py
 @Date   :   2023/6/10
 @Author :   Haomin Kong
 @IDE    :   Pycharm
 """
 import sys
 
-import oss2
+from qiniu import Auth
+from qiniu import BucketManager
+from qiniu import put_file
 
-import MdUploadToRemote.service.aliyunoss.oss_config
+import MdUploadToRemote.service.qiniuyun.qiniu_config
 
 
-class OssUpload(object):
+# import utils
+
+
+class QiniuUpload(object):
 
     def __init__(self):
 
-        self.oss_config = MdUploadToRemote.service.aliyunoss.oss_config.OssConfig()
-
-        # 阿里云账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM用户进行API访问或日常运维，请登录RAM控制台创建RAM用户。
-        self.auth = oss2.Auth(self.oss_config.accessKeyId, self.oss_config.accessKeySecret)
-        # # Endpoint以杭州为例，其它Region请按实际情况填写。
-        self.bucket = oss2.Bucket(self.auth, self.oss_config.server_url, self.oss_config.bucketName)
+        self.qiniu_config = MdUploadToRemote.service.qiniuyun.qiniu_config.QiniuConfig()
+        self.q = Auth(self.qiniu_config.access_key, self.qiniu_config.secret_key)
+        self.token = self.q.upload_token(self.qiniu_config.bucket_name)
+        self.bucket = BucketManager(self.q)
 
     def upload_pic(self, md_info):
         img_list = md_info['img_list']
@@ -30,10 +33,10 @@ class OssUpload(object):
 
         for img_info in img_list:
             local_path = img_info['img_absolute_path']
-            remote_path = self.oss_config.target_base_path + img_info['target_path']
+            remote_path = self.qiniu_config.target_base_path + img_info['target_path']
             if remote_path.startswith("/"):
                 remote_path = remote_path[1:]
-            remote_url = self.oss_config.domain + "/" + remote_path + self.oss_config.parameters
+            remote_url = self.qiniu_config.domain + "/" + remote_path + self.qiniu_config.parameters
 
             d = {'local_path': local_path, 'remote_path': remote_path,
                  'remote_url': remote_url, 'upload': False, 'ori_relative_path': img_info['ori_relative_path']}
@@ -43,10 +46,12 @@ class OssUpload(object):
 
             print((remote_path, local_path))
             try:
-                if self.bucket.object_exists(remote_path):
+                ret, info = self.bucket.stat(self.qiniu_config.bucket_name, remote_path)
+                if str(info.status_code) == '200':
                     print("文件已经存在", local_path)
                 else:
-                    self.bucket.put_object_from_file(remote_path, local_path)
+                    ret, info = put_file(self.token, remote_path, local_path, check_crc=True)
+                    # print(info.ok())
                 print(remote_url)
                 d['upload'] = True
                 print()

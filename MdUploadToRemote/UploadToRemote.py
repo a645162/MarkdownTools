@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
 """
-@File   :   oss_main.py
-@Date   :   2023/6/8
+@File   :   UploadToRemote.py
+@Date   :   2023/6/10
 @Author :   Haomin Kong
 @IDE    :   Pycharm
 """
+
+import os
+import re
 import sys
 
 import utils
-import os
-
-import re
 from config import upload_config
 from service.aliyunoss.oss_upload import OssUpload
+from service.qiniuyun.qiniu_upload import QiniuUpload
 
 upload_config = upload_config.UploadConfig()
 
@@ -20,9 +21,23 @@ re_md_pic = re.compile(r'!\[.*\]\(.+\..+\)')
 re_md_pic_other = re.compile(r'\(.+\..+\)')
 
 if upload_config.type == '1':
-    pass
-updateObj = OssUpload()
-upload_pic = updateObj.upload_pic
+    updateObj = OssUpload()
+    upload_pic = updateObj.upload_pic
+elif upload_config.type == '2':
+    updateObj = QiniuUpload()
+    upload_pic = updateObj.upload_pic
+elif upload_config.type == '3':
+    print('暂时不支持的类型！')
+    exit(-1)
+elif upload_config.type == '4':
+    print('暂时不支持的类型！')
+    exit(-1)
+elif upload_config.type == '5':
+    print('暂时不支持的类型！')
+    exit(-1)
+else:
+    print('暂时不支持的类型！')
+    exit(-1)
 
 
 def parse_md_file(md_path, md_code, max_parent_level):
@@ -148,6 +163,3 @@ if __name__ == '__main__':
         print(md_path)
         if os.path.exists(md_path):
             doall(md_path)
-
-# print()
-# bucket.put_object_from_file('<yourObjectName>', 'img_path')
