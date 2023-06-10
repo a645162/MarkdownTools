@@ -1,4 +1,4 @@
 
 *.ini
 .idea/
-MdUploadToRemote/aliyunoss/__pycache__/
+MdUploadToRemote/service/aliyunoss/__pycache__/
