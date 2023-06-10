@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+@File   :   utils.py
+@Date   :   2023/6/8
+@Author :   Haomin Kong
+@ID
+E    :   Pycharm
+"""
+
 import platform
 import re
 
