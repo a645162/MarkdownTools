@@ -1,4 +1,3 @@
-import re
 import os
 
 import time
@@ -287,7 +286,7 @@ def findCCode(node):
     blocks = node.inner_text.split("```C")
 
     if len(blocks) >= 1:
-        title = node.title.replace("*","")
+        title = node.title.replace("*", "")
         if len(title) == 0:
             title = "[空]"
 

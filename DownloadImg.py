@@ -1,6 +1,7 @@
 import re
-import requests
 import urllib.parse as urllib_parse
+
+import requests
 
 path = r"C:\Users\konghaomin\CLionProjects\23nuist816\nuist816\6.TreeAndBTree\满k叉树.md"
 

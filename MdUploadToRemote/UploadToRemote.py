@@ -154,7 +154,8 @@ def doall(md_path):
 if __name__ == '__main__':
 
     files_list = sys.argv[1:]
-    files_list.append(r'H:\Prj\MarkdownTools\MdUploadToRemote\test\testmd.md')
+    # files_list.append(r'H:\Prj\MarkdownTools\MdUploadToRemote\test\testmd.md')
+    # files_list.append(r'/media/konghaomin/PAM963/Data/Obsdian/PC/Windows/Windows Defender.md')
 
     if len(files_list) == 0:
         print("请将路径作为参数传入！")
