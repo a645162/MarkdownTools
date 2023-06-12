@@ -11,6 +11,7 @@ import re
 import sys
 
 import utils
+from MdUtils.file_utils import judge_file_encoding
 from config import upload_config
 from service.aliyunoss.oss_upload import OssUpload
 from service.qiniuyun.qiniu_upload import QiniuUpload
@@ -124,19 +125,21 @@ def modify_md_file(upload_info, md_code):
 def doall(md_path):
     print("开始", md_path)
 
-    from chardet.universaldetector import UniversalDetector
-    detector = UniversalDetector()
-    detector.reset()
-    for each in open(md_path, 'rb'):
-        detector.feed(each)
-        if detector.done:
-            break
-    detector.close()
-    file_encoding = detector.result['encoding']
-    confidence = detector.result['confidence']
+    # from chardet.universaldetector import UniversalDetector
+    # detector = UniversalDetector()
+    # detector.reset()
+    # for each in open(md_path, 'rb'):
+    #     detector.feed(each)
+    #     if detector.done:
+    #         break
+    # detector.close()
+    # file_encoding = detector.result['encoding']
+    # confidence = detector.result['confidence']
+    #
+    # if confidence < 0.75:
+    #     file_encoding = 'utf-8'
 
-    if confidence < 0.75:
-        file_encoding = 'utf-8'
+    file_encoding = judge_file_encoding(md_path)
 
     md_code = ""
     try:
