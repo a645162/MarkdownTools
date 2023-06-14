@@ -7,11 +7,10 @@
 """
 
 import os
-import re
 import sys
 
 from MdUtils.file_utils import judge_file_encoding
-from MdUtils.parser.parse_md_img import parse_md_file_img
+from MdUtils.parser.parse_md_img import parse_md_file_img_upload_list
 from config import upload_config
 from service.aliyunoss.oss_upload import OssUpload
 from service.qiniuyun.qiniu_upload import QiniuUpload
@@ -80,7 +79,8 @@ def doall(md_path):
     except Exception as e:
         print(e.args)
 
-    md_info = parse_md_file_img(md_path=md_path, max_parent_level=upload_config.max_parent_level, md_code=md_code)
+    md_info = parse_md_file_img_upload_list(md_path=md_path, max_parent_level=upload_config.max_parent_level,
+                                            md_code=md_code)
     upload_info = upload_pic(md_info=md_info)
     modify_md_file(upload_info=upload_info, md_code=md_code)
 
@@ -88,10 +88,6 @@ def doall(md_path):
 if __name__ == '__main__':
 
     files_list = sys.argv[1:]
-    # files_list.append(r'H:\Prj\MarkdownTools\MdUploadToRemote\test\testmd.md')
-    files_list.append(r'/media/konghaomin/PAM963/Data/Obsdian/Linux/Linux/Wayland.md')
-    # files_list.append(r'/media/konghaomin/PAM963/Data/Obsdian/Linux/Linux/KDE 双显示器不同 DPI.md')
-    # files_list.append(r'H:\Data\Obsdian\Linux\Linux\KDE 双显示器不同 DPI.md')
 
     if len(files_list) == 0:
         print("请将路径作为参数传入！")
