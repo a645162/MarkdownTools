@@ -10,16 +10,13 @@ import os
 import re
 import sys
 
-import utils
 from MdUtils.file_utils import judge_file_encoding
+from MdUtils.parser.parse_md_img import parse_md_file_img
 from config import upload_config
 from service.aliyunoss.oss_upload import OssUpload
 from service.qiniuyun.qiniu_upload import QiniuUpload
 
 upload_config = upload_config.UploadConfig()
-
-re_md_pic = re.compile(r'!\[.*\]\(.+\..+\)')
-re_md_pic_other = re.compile(r'\(.+\..+\)')
 
 if upload_config.type == '1':
     updateObj = OssUpload()
@@ -39,58 +36,6 @@ elif upload_config.type == '5':
 else:
     print('暂时不支持的类型！')
     exit(-1)
-
-
-def parse_md_file(md_path, md_code, max_parent_level):
-    # md 文件信息获取
-    # md_path = r'H:\testmd.md'
-    md_file_name = os.path.basename(md_path)
-    md_dir_path = os.path.dirname(md_path)
-
-    tmp_md_dir_path = md_dir_path
-    md_parent = []
-    while len(os.path.basename(tmp_md_dir_path)) > 0:
-        md_parent.append(os.path.basename(tmp_md_dir_path))
-        tmp_md_dir_path = os.path.dirname(tmp_md_dir_path)
-
-    # md文件解析
-    img_list = []
-
-    re_result = re.findall(re_md_pic, md_code)
-    for md_pic_code in re_result:
-        res = re.findall(re_md_pic_other, md_pic_code)
-        img_relative_path = ""
-        if len(res) == 1:
-            img_relative_path = res[0].strip()[1:-1].strip()
-
-        # 过滤掉已经是在线链接的图片
-        if utils.is_url(img_relative_path):
-            continue
-
-        # img_relative_path = 'img/1686209662200.png'
-        img_absolute_path = os.path.join(md_dir_path, utils.slash_to_backslash(img_relative_path))
-
-        # 根据 level级 父目录 生成路径
-        md_dir_relative_path = ""
-        actual_level = min(max_parent_level, len(md_parent))
-        for i in range(actual_level - 1, -1, -1):
-            md_dir_relative_path += md_parent[i] + "/"
-
-        # target_path = oss_config.target_base_path + "/" + md_dir_relative_path + img_relative_path
-        # target_url = oss_config.domain + target_path + oss_config.parameters
-
-        img_list.append(
-            {
-                'img_absolute_path': img_absolute_path,
-                'target_path': "/" + md_dir_relative_path + utils.backslash_to_slash(img_relative_path),
-                'ori_relative_path': img_relative_path
-            }
-        )
-
-    return {'md_path': md_path,
-            'md_dir_path': md_dir_path,
-            'md_file_name': md_file_name,
-            'img_list': img_list}
 
 
 def modify_md_file(upload_info, md_code):
@@ -125,20 +70,6 @@ def modify_md_file(upload_info, md_code):
 def doall(md_path):
     print("开始", md_path)
 
-    # from chardet.universaldetector import UniversalDetector
-    # detector = UniversalDetector()
-    # detector.reset()
-    # for each in open(md_path, 'rb'):
-    #     detector.feed(each)
-    #     if detector.done:
-    #         break
-    # detector.close()
-    # file_encoding = detector.result['encoding']
-    # confidence = detector.result['confidence']
-    #
-    # if confidence < 0.75:
-    #     file_encoding = 'utf-8'
-
     file_encoding = judge_file_encoding(md_path)
 
     md_code = ""
@@ -149,7 +80,7 @@ def doall(md_path):
     except Exception as e:
         print(e.args)
 
-    md_info = parse_md_file(md_path=md_path, max_parent_level=upload_config.max_parent_level, md_code=md_code)
+    md_info = parse_md_file_img(md_path=md_path, max_parent_level=upload_config.max_parent_level, md_code=md_code)
     upload_info = upload_pic(md_info=md_info)
     modify_md_file(upload_info=upload_info, md_code=md_code)
 
@@ -158,7 +89,9 @@ if __name__ == '__main__':
 
     files_list = sys.argv[1:]
     # files_list.append(r'H:\Prj\MarkdownTools\MdUploadToRemote\test\testmd.md')
-    # files_list.append(r'/media/konghaomin/PAM963/Data/Obsdian/PC/Windows/Windows Defender.md')
+    files_list.append(r'/media/konghaomin/PAM963/Data/Obsdian/Linux/Linux/Wayland.md')
+    # files_list.append(r'/media/konghaomin/PAM963/Data/Obsdian/Linux/Linux/KDE 双显示器不同 DPI.md')
+    # files_list.append(r'H:\Data\Obsdian\Linux\Linux\KDE 双显示器不同 DPI.md')
 
     if len(files_list) == 0:
         print("请将路径作为参数传入！")
