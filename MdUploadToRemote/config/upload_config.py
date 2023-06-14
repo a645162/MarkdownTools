@@ -14,7 +14,7 @@ class UploadConfig:
 
     def __init__(self, path='upload_config.ini'):
         self.config = configparser.ConfigParser()
-        self.config.read(os.path.join(os.path.dirname(os.path.abspath(__file__)), path),encoding='utf-8')
+        self.config.read(os.path.join(os.path.dirname(os.path.abspath(__file__)), path), encoding='utf-8')
 
         self.type = str(self.config.get('service', 'type'))
 

@@ -3,7 +3,8 @@
 @File   :   utils.py
 @Date   :   2023/6/8
 @Author :   Haomin Kong
-@IDE    :   Pycharm
+@ID
+E    :   Pycharm
 """
 
 import platform
@@ -38,3 +39,10 @@ def slash_to_backslash(path):
         while r.find('/') != -1:
             r = r.replace('/', '\\')
     return r
+
+
+def correct_slash(path):
+    if is_windows():
+        return slash_to_backslash(path)
+    else:
+        return backslash_to_slash(path)
