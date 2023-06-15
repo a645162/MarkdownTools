@@ -9,6 +9,8 @@
 import configparser
 import os
 
+from MdUtils.File.PathUtils import trim_relative_path
+
 
 class OssConfig:
 
@@ -28,11 +30,7 @@ class OssConfig:
         if len(self.domain) == 0:
             self.domain = r'https://{}.{}.aliyuncs.com'.format(self.bucketName, self.region)
 
-        self.target_base_path = self.config.get('program', 'target_base_path')
-        if self.target_base_path.startswith('/'):
-            self.target_base_path = self.target_base_path[1:]
-        if self.target_base_path.endswith('/'):
-            self.target_base_path = self.target_base_path[:-1]
+        self.target_base_path = trim_relative_path(self.config.get('program', 'target_base_path'))
 
         self.max_parent_level = self.config.get('program', 'max_parent_level')
         if len(self.max_parent_level) == 0:
