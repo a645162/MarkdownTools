@@ -23,7 +23,7 @@ md = """
 """
 
 
-class MarkdownBlock():
+class MarkdownBlock:
 
     def __init__(self, title="", inner_text="", code="", depth=0, path=""):
         self.title = title
@@ -33,72 +33,72 @@ class MarkdownBlock():
         self.path = path
         self.son = []
 
-    def parseSon(self):
+    def parse_son(self):
         if len(self.code) == 0:
             return
 
         lines = self.code.split("\n")
-        sonLevel = self.depth + 1
-        sonCount = 0;
-        levelList = parseTitle(lines, sonLevel)
+        son_level = self.depth + 1
+        son_count = 0
+        level_list = parseTitle(lines, son_level)
 
-        if len(levelList) == 0 or levelList[0] != 0:
+        if len(level_list) == 0 or level_list[0] != 0:
             # 没有任何一个搜索级别的标签（考虑只有子标签）
             # 或者，有，但是在第一个之前还有内容，那肯定是字标签
 
-            titleLine = -1
-            if len(levelList) == 0:
+            title_line = -1
+            if len(level_list) == 0:
                 searchRange = len(lines)
             else:
-                searchRange = levelList[0]
+                searchRange = level_list[0]
 
             for i in range(0, searchRange):
                 if isTitle(lines[i]):
-                    titleLine = i
+                    title_line = i
                     break
 
-            if titleLine >= 0:
+            if title_line >= 0:
                 # 找到第一个标题行了
                 title = ""
-                InnerText = mkString(lines[0:titleLine])
-                code = mkString(lines[titleLine:searchRange])
-                sonCount += 1
+                InnerText = mkString(lines[0:title_line])
+                code = mkString(lines[title_line:searchRange])
+                son_count += 1
                 new_son = \
-                    MarkdownBlock(title, InnerText, code, sonLevel, self.path + str(sonCount))
+                    MarkdownBlock(title, InnerText, code, son_level, self.path + str(son_count))
                 self.son.append(new_son)
-                new_son.parseSon()
+                new_son.parse_son()
 
-        for i in range(0, len(levelList)):
+        for i in range(0, len(level_list)):
             # 1,2
-            title = lines[levelList[i]].strip()[sonLevel + 1:].strip()
-            start = levelList[i] + 1
-            if i == len(levelList) - 1:
+            title = lines[level_list[i]].strip()[son_level + 1:].strip()
+            start = level_list[i] + 1
+            if i == len(level_list) - 1:
                 end = len(lines)
             else:
-                end = levelList[i + 1]
+                end = level_list[i + 1]
 
-            titleLine = -1
+            title_line = -1
             for i in range(start, end):
                 if isTitle(lines[i]):
-                    titleLine = i
+                    title_line = i
                     break
 
-            if titleLine >= 0:
-                InnerText = mkString(lines[start:titleLine])
-                code = mkString(lines[titleLine:end])
+            if title_line >= 0:
+                InnerText = mkString(lines[start:title_line])
+                code = mkString(lines[title_line:end])
             else:
                 InnerText = mkString(lines[start: end])
                 code = ""
 
-            sonCount += 1
+            son_count += 1
             new_son = \
-                MarkdownBlock(title, InnerText, code, sonLevel, self.path + str(sonCount))
+                MarkdownBlock(title, InnerText, code, son_level, self.path + str(son_count))
             self.son.append(new_son)
-            new_son.parseSon()
+            new_son.parse_son()
 
         # code = mkString(lines[end:])
 
-    def isLeaf(self):
+    def is_leaf(self):
         return len(self.son) == 0
 
 
@@ -226,8 +226,9 @@ def OutPutTitleTodoList(node):
     return re
 
 
-dir = r"D:\Prj\23nuist816\nuist816\9.Sort"
-filename = r"9.Sort排序.md"
+path = r'H:\Prj\MarkdownTools\test\树.md'
+dir = os.path.dirname(path)
+filename = os.path.basename(path)
 path = dir + "\\" + filename
 
 with open(path, encoding='utf-8') as file_obj:
@@ -236,7 +237,7 @@ with open(path, encoding='utf-8') as file_obj:
 
 rootEle = getRoot(md)
 rootEle.title = filename
-rootEle.parseSon()
+rootEle.parse_son()
 
 todoText = OutPutTitleTodoList(rootEle)
 print(todoText)

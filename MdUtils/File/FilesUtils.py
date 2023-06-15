@@ -1,3 +1,18 @@
+def Read_File(file_path):
+    file_encoding = judge_file_encoding(file_path)
+
+    md_code = ""
+    try:
+        f = open(file_path, mode='r', encoding=file_encoding)
+        md_code = f.read()
+        f.close()
+    except Exception as e:
+        print('读取文件出错！', file_path)
+        print(e.args)
+
+    return md_code.strip()
+
+
 def judge_file_encoding(file_path):
     from chardet.universaldetector import UniversalDetector
     detector = UniversalDetector()
