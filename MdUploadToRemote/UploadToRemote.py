@@ -9,8 +9,8 @@
 import os
 import sys
 
-from MdUtils.file_utils import judge_file_encoding
-from MdUtils.Parser.parse_md_img import parse_md_file_img_upload_list
+from MdUtils.File.FilesUtils import Read_File
+from MdUtils.Parser.ParseMdImg import parse_md_file_img_upload_list
 from config import upload_config
 from service.aliyunoss.oss_upload import OssUpload
 from service.qiniuyun.qiniu_upload import QiniuUpload
@@ -69,15 +69,7 @@ def modify_md_file(upload_info, md_code):
 def doall(md_path):
     print("开始", md_path)
 
-    file_encoding = judge_file_encoding(md_path)
-
-    md_code = ""
-    try:
-        f = open(md_path, mode='r', encoding=file_encoding)
-        md_code = f.read()
-        f.close()
-    except Exception as e:
-        print(e.args)
+    md_code = Read_File(md_path)
 
     md_info = parse_md_file_img_upload_list(md_path=md_path, max_parent_level=upload_config.max_parent_level,
                                             md_code=md_code)

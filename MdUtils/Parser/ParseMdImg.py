@@ -1,8 +1,8 @@
 import os
 import re
 
-from MdUtils.file_utils import judge_file_encoding
-from MdUtils.utils import is_url, backslash_to_slash, correct_slash
+from MdUtils.File.FilesUtils import Read_File
+from MdUtils.Utils import is_url, backslash_to_slash, correct_slash
 
 
 class ImgLocationType:
@@ -59,16 +59,11 @@ def parse_md_code_img_list(md_code, mode):
     return img_list
 
 
-def parse_md_file_img_upload_list(md_path, md_code, max_parent_level):
+def parse_md_file_img_upload_list(md_path, md_code, max_parent_level=2):
     md_code = md_code.strip()
+
     if len(md_code) == 0:
-        file_encoding = judge_file_encoding(md_path)
-        try:
-            f = open(md_path, mode='r', encoding=file_encoding)
-            md_code = f.read()
-            f.close()
-        except Exception as e:
-            print(e.args)
+        md_code = Read_File(md_path)
 
     md_file_name = os.path.basename(md_path)
     md_dir_path = os.path.dirname(md_path)
@@ -111,7 +106,7 @@ def parse_md_file_img_upload_list(md_path, md_code, max_parent_level):
     }
 
 
-def parse_md_file_img_download_list(md_code, max_parent_level):
+def parse_md_file_img_download_list(md_code, max_parent_level=2):
     md_code = md_code.strip()
     if len(md_code) == 0:
         return None
@@ -127,6 +122,11 @@ def parse_md_file_img_download_list(md_code, max_parent_level):
         img_relative_path = img_relative_path[img_relative_path.find("://") + 3:]
         img_relative_path = img_relative_path[img_relative_path.find("/") + 1:]
 
+        # 去除参数，因为目录/文件名不会允许带问号的
+        index = img_relative_path.find('?')
+        if index > 0:
+            img_relative_path = img_relative_path[:index]
+
         # 根据 level级 父目录 生成路径
         img_dir_relative_path = ""
         img_url_parent_list = img_relative_path.split("/")
@@ -136,8 +136,6 @@ def parse_md_file_img_download_list(md_code, max_parent_level):
             img_dir_relative_path += img_url_parent_final[i] + "/"
 
         file_name = img_url_parent_list[-1]
-
-        # TODO:去除文件名后面的参数
 
         img_dir_relative_path += file_name
 
