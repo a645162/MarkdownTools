@@ -10,7 +10,7 @@ import os
 import sys
 
 from MdUtils.file_utils import judge_file_encoding
-from MdUtils.parser.parse_md_img import parse_md_file_img_upload_list
+from MdUtils.Parser.parse_md_img import parse_md_file_img_upload_list
 from config import upload_config
 from service.aliyunoss.oss_upload import OssUpload
 from service.qiniuyun.qiniu_upload import QiniuUpload

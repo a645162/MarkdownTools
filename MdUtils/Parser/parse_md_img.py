@@ -109,3 +109,42 @@ def parse_md_file_img_upload_list(md_path, md_code, max_parent_level):
         'md_file_name': md_file_name,
         'img_list': md_img_update_list
     }
+
+
+def parse_md_file_img_download_list(md_code, max_parent_level):
+    md_code = md_code.strip()
+    if len(md_code) == 0:
+        return None
+
+    # md文件解析
+    img_list = parse_md_code_img_list(md_code, ImgLocationType.NETWORK)
+    md_img_update_list = []
+
+    for img in img_list:
+
+        img_relative_path = img['img_path'].strip()
+        this_file = {'remote_url': img_relative_path}
+        img_relative_path = img_relative_path[img_relative_path.find("://") + 3:]
+        img_relative_path = img_relative_path[img_relative_path.find("/") + 1:]
+
+        # 根据 level级 父目录 生成路径
+        img_dir_relative_path = ""
+        img_url_parent_list = img_relative_path.split("/")
+        img_url_parent_final = img_url_parent_list[-max_parent_level - 1:-1]
+
+        for i in range(len(img_url_parent_final)):
+            img_dir_relative_path += img_url_parent_final[i] + "/"
+
+        file_name = img_url_parent_list[-1]
+
+        # TODO:去除文件名后面的参数
+
+        img_dir_relative_path += file_name
+
+        print(img_dir_relative_path)
+
+        this_file['img_dir_relative_path'] = img_dir_relative_path
+
+        md_img_update_list.append(this_file)
+
+    return img_list
