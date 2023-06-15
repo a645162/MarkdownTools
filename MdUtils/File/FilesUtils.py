@@ -13,7 +13,7 @@ def Read_File(file_path):
         print('读取文件出错！', file_path)
         print(e.args)
 
-    return md_code.strip()
+    return md_code
 
 
 def judge_file_encoding(file_path):

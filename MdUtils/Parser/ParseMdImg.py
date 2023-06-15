@@ -139,7 +139,7 @@ def parse_md_file_img_download_list(md_code, max_parent_level=2):
 
         img_dir_relative_path += file_name
 
-        print(img_dir_relative_path)
+        # print(img_dir_relative_path)
 
         this_file['img_dir_relative_path'] = img_dir_relative_path
 
