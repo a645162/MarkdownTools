@@ -1,3 +1,6 @@
+import os
+
+
 def Read_File(file_path):
     file_encoding = judge_file_encoding(file_path)
 
@@ -30,3 +33,8 @@ def judge_file_encoding(file_path):
         file_encoding = 'utf-8'
 
     return file_encoding
+
+
+def mkdir_if_not_exist(dir):
+    if not os.path.exists(dir):
+        os.makedirs(dir)
