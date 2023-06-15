@@ -12,3 +12,4 @@ test/testmd.md.upload.md
 MdUtils/__pycache__/
 MdUtils/Parser/__pycache__/
 MdUploadToRemote/service/__pycache__/
+MdUtils/File/__pycache__/
