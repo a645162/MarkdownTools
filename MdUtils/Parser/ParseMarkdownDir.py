@@ -226,8 +226,9 @@ def OutPutTitleTodoList(node):
     return re
 
 
-dir = r"D:\Prj\23nuist816\nuist816\9.Sort"
-filename = r"9.Sort排序.md"
+path = r'H:\Prj\MarkdownTools\test\树.md'
+dir = os.path.dirname(path)
+filename = os.path.basename(path)
 path = dir + "\\" + filename
 
 with open(path, encoding='utf-8') as file_obj:
