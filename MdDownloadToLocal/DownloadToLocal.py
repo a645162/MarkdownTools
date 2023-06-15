@@ -3,7 +3,7 @@ import sys
 
 from MdDownloadToLocal.config.download_config import DownloadConfig
 from MdUtils.File.Downloader.Downloader import download2local_simple
-from MdUtils.File.FilesUtils import Read_File
+from MdUtils.File.FilesUtils import read_file
 from MdUtils.Parser.ParseMdImg import parse_md_file_img_download_list
 from MdUtils.Utils import correct_slash, backslash_to_slash
 
@@ -26,7 +26,7 @@ def generate_download_list(md_img_download_list, md_path):
 
 def download_generate_md(md_path, md_code, md_img_download_list):
     if len(md_code.strip()) == 0:
-        md_code = Read_File(md_path)
+        md_code = read_file(md_path)
 
     new_md_path = md_path + ".local.md"
 
@@ -47,7 +47,7 @@ def download_generate_md(md_path, md_code, md_img_download_list):
 def doall(md_path):
     print("\n\n\n开始", md_path)
 
-    md_code = Read_File(md_path)
+    md_code = read_file(md_path)
 
     md_img_download_list = \
         parse_md_file_img_download_list(max_parent_level=download_config.max_parent_level, md_code=md_code)

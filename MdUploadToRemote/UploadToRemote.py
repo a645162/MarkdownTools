@@ -10,7 +10,7 @@ import os
 import sys
 
 from MdUploadToRemote.service.Service import ServiceType
-from MdUtils.File.FilesUtils import Read_File
+from MdUtils.File.FilesUtils import read_file
 from MdUtils.Parser.ParseMdImg import parse_md_file_img_upload_list
 from config import upload_config
 from service.aliyunoss.oss_upload import OssUpload
@@ -70,7 +70,7 @@ def modify_md_file(upload_info, md_code):
 def doall(md_path):
     print("\n\n\n开始", md_path)
 
-    md_code = Read_File(md_path)
+    md_code = read_file(md_path)
 
     md_info = parse_md_file_img_upload_list(md_path=md_path, max_parent_level=upload_config.max_parent_level,
                                             md_code=md_code)

@@ -48,23 +48,23 @@ class MarkdownBlock:
 
             title_line = -1
             if len(level_list) == 0:
-                searchRange = len(lines)
+                search_range = len(lines)
             else:
-                searchRange = level_list[0]
+                search_range = level_list[0]
 
-            for i in range(0, searchRange):
-                if isTitle(lines[i]):
+            for i in range(0, search_range):
+                if is_title(lines[i]):
                     title_line = i
                     break
 
             if title_line >= 0:
                 # 找到第一个标题行了
                 title = ""
-                InnerText = mkString(lines[0:title_line])
-                code = mkString(lines[title_line:searchRange])
+                inner_text = mkString(lines[0:title_line])
+                code = mkString(lines[title_line:search_range])
                 son_count += 1
                 new_son = \
-                    MarkdownBlock(title, InnerText, code, son_level, self.path + str(son_count))
+                    MarkdownBlock(title, inner_text, code, son_level, self.path + str(son_count))
                 self.son.append(new_son)
                 new_son.parse_son()
 
@@ -79,20 +79,20 @@ class MarkdownBlock:
 
             title_line = -1
             for i in range(start, end):
-                if isTitle(lines[i]):
+                if is_title(lines[i]):
                     title_line = i
                     break
 
             if title_line >= 0:
-                InnerText = mkString(lines[start:title_line])
+                inner_text = mkString(lines[start:title_line])
                 code = mkString(lines[title_line:end])
             else:
-                InnerText = mkString(lines[start: end])
+                inner_text = mkString(lines[start: end])
                 code = ""
 
             son_count += 1
             new_son = \
-                MarkdownBlock(title, InnerText, code, son_level, self.path + str(son_count))
+                MarkdownBlock(title, inner_text, code, son_level, self.path + str(son_count))
             self.son.append(new_son)
             new_son.parse_son()
 
@@ -101,6 +101,14 @@ class MarkdownBlock:
     def is_leaf(self):
         return len(self.son) == 0
 
+    def get_path_string(self):
+        mypath = self.path.strip()
+        re = ""
+        for i in mypath:
+            re += "." + i
+
+        return re[1:]
+
 
 def parseTitle(lines, depth):
     levelList = []
@@ -108,13 +116,13 @@ def parseTitle(lines, depth):
         lines = lines.split('\n')
 
     for i in range(len(lines)):
-        if isDepth(lines[i], depth):
+        if is_target_level_title(lines[i], depth):
             levelList.append(i)
 
     return levelList
 
 
-def isTitle(text):
+def is_title(text):
     text1 = text.strip()
     i = 0
     while i < len(text1) and text1[i] == '#':
@@ -126,17 +134,19 @@ def isTitle(text):
         return False
 
 
-def isDepth(text, depth=1):
+def is_target_level_title(text, level=1):
     text1 = text.strip()
-    if len(text1) < depth + 2:
+    if len(text1) < level + 2:
         return False
+
+    # level级标题会有level个#，以及下一个位置必定为空格！
     ok = True
-    for i in range(depth):
+    for i in range(level):
         if text1[i] != "#":
             ok = False
             break
 
-    if text1[depth] != " ":
+    if text1[level] != " ":
         ok = False
 
     return ok
@@ -152,20 +162,12 @@ def mkString(lines):
     return text.strip()
 
 
-def pathAddDot(path):
-    path = str(path).strip()
-    re = ""
-    for i in path:
-        re += "." + i
-    return re[1:]
-
-
 def getRoot(text):
     lines = text.split("\n")
 
     innerTextEnd = 0
     for i in range(len(lines)):
-        if isTitle(lines[i]):
+        if is_title(lines[i]):
             innerTextEnd = i
             break
 
@@ -184,7 +186,7 @@ def OutPutStruct(node):
     if len(title) == 0:
         title = "[空]"
 
-    path = pathAddDot(node.path)
+    path = node.get_path_string()
 
     print(spaces + jing + " " + path + " " + title)
 
@@ -209,7 +211,7 @@ def OutPutTitleTodoList(node):
     if len(title) == 0:
         title = "[空]"
 
-    path = pathAddDot(node.path)
+    path = node.get_path_string()
 
     re += spaces + jing + " " + path + " " + title + "\n"
 
@@ -229,7 +231,7 @@ def OutPutTitleTodoList(node):
 path = r'H:\Prj\MarkdownTools\test\树.md'
 dir = os.path.dirname(path)
 filename = os.path.basename(path)
-path = dir + "\\" + filename
+
 
 with open(path, encoding='utf-8') as file_obj:
     contents = file_obj.read()
@@ -241,20 +243,11 @@ rootEle.parse_son()
 
 todoText = OutPutTitleTodoList(rootEle)
 print(todoText)
-todofilename = filename + ".todo.md"
-todoFilePath = dir + "\\" + todofilename
-if os.path.isfile(todoFilePath):
-    # ctime = time.localtime(os.path.getctime(todoFilePath))
-    mtime = time.localtime(os.path.getmtime(todoFilePath))
-    mtime = time.strftime("%Y-%m-%d-%H-%M-%S", mtime)
-    print("发现旧的todo文件，修改日期：")
-    print(mtime)
-    newname = "(" + mtime + ")" + todofilename
-    os.rename(todoFilePath, dir + "\\" + newname)
 
-f = open(todoFilePath, "w", encoding='utf-8')
-f.write(todoText)
-f.close()
+# todofilename = filename + ".todo.md"
+# todoFilePath = dir + "\\" + todofilename
+
+
 
 
 def handleCCode(codeText):
@@ -283,7 +276,7 @@ def handleCCode(codeText):
 
 
 def findCCode(node):
-    structPath = pathAddDot(node.path) + "."
+    structPath = node.get_path_string() + "."
     blocks = node.inner_text.split("```C")
 
     if len(blocks) >= 1:

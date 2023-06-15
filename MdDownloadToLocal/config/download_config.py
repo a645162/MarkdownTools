@@ -20,7 +20,7 @@ class DownloadConfig:
 
         self.type = str(self.config.get('downloader', 'type'))
 
-        self.target_base_path = trim_relative_path(self.config.get('program', 'save_path'))
+        self.target_base_path = trim_relative_path(self.config.get('program', 'target_base_path'))
 
         self.max_parent_level = self.config.get('program', 'max_parent_level')
         if len(self.max_parent_level) == 0:

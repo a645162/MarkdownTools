@@ -1,7 +1,8 @@
 import os
+import time
 
 
-def Read_File(file_path):
+def read_file(file_path):
     file_encoding = judge_file_encoding(file_path)
 
     md_code = ""
@@ -14,6 +15,27 @@ def Read_File(file_path):
         print(e.args)
 
     return md_code
+
+
+def save_file(file_path, text=""):
+    file_dir = os.path.dirname(file_path)
+    print('即将写出', file_path)
+    if os.path.isfile(file_path):
+        # ctime = time.localtime(os.path.getctime(todoFilePath))
+        mtime = time.localtime(os.path.getmtime(file_path))
+        mtime = time.strftime("%Y-%m-%d-%H-%M-%S", mtime)
+        print("发现旧的文件，修改日期：")
+        print(mtime)
+        new_name = "(" + mtime + ")" + file_path
+
+        os.rename(file_path, os.path.join(file_dir, new_name))
+
+    try:
+        f = open(file_path, "w", encoding='utf-8')
+        f.write(text)
+        f.close()
+    except:
+        print('文件写出失败！')
 
 
 def judge_file_encoding(file_path):
