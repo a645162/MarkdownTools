@@ -1,3 +1,6 @@
+import os
+
+
 def Read_File(file_path):
     file_encoding = judge_file_encoding(file_path)
 
@@ -10,7 +13,7 @@ def Read_File(file_path):
         print('读取文件出错！', file_path)
         print(e.args)
 
-    return md_code.strip()
+    return md_code
 
 
 def judge_file_encoding(file_path):
@@ -30,3 +33,8 @@ def judge_file_encoding(file_path):
         file_encoding = 'utf-8'
 
     return file_encoding
+
+
+def mkdir_if_not_exist(dir):
+    if not os.path.exists(dir):
+        os.makedirs(dir)

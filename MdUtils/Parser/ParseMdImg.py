@@ -113,7 +113,7 @@ def parse_md_file_img_download_list(md_code, max_parent_level=2):
 
     # md文件解析
     img_list = parse_md_code_img_list(md_code, ImgLocationType.NETWORK)
-    md_img_update_list = []
+    md_img_download_list = []
 
     for img in img_list:
 
@@ -139,10 +139,10 @@ def parse_md_file_img_download_list(md_code, max_parent_level=2):
 
         img_dir_relative_path += file_name
 
-        print(img_dir_relative_path)
+        # print(img_dir_relative_path)
 
         this_file['img_dir_relative_path'] = img_dir_relative_path
 
-        md_img_update_list.append(this_file)
+        md_img_download_list.append(this_file)
 
-    return img_list
+    return md_img_download_list

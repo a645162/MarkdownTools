@@ -16,7 +16,7 @@ class UploadConfig:
         self.config = configparser.ConfigParser()
         self.config.read(os.path.join(os.path.dirname(os.path.abspath(__file__)), path), encoding='utf-8')
 
-        self.type = str(self.config.get('service', 'type'))
+        self.type = str(self.config.get('service', 'type')).strip()
 
         # self.target_base_path = self.config.get('program', 'target_base_path')
         # if self.target_base_path.startswith('/'):

@@ -9,6 +9,7 @@
 import os
 import sys
 
+from MdUploadToRemote.service.Service import ServiceType
 from MdUtils.File.FilesUtils import Read_File
 from MdUtils.Parser.ParseMdImg import parse_md_file_img_upload_list
 from config import upload_config
@@ -17,19 +18,19 @@ from service.qiniuyun.qiniu_upload import QiniuUpload
 
 upload_config = upload_config.UploadConfig()
 
-if upload_config.type == '1':
+if upload_config.type == ServiceType.AliyunOSS:
     updateObj = OssUpload()
     upload_pic = updateObj.upload_pic
-elif upload_config.type == '2':
+elif upload_config.type == ServiceType.QiniuYun:
     updateObj = QiniuUpload()
     upload_pic = updateObj.upload_pic
-elif upload_config.type == '3':
+elif upload_config.type == ServiceType.TencentCOS:
     print('暂时不支持的类型！')
     exit(-1)
-elif upload_config.type == '4':
+elif upload_config.type == ServiceType.Upyun:
     print('暂时不支持的类型！')
     exit(-1)
-elif upload_config.type == '5':
+elif upload_config.type == ServiceType.imgur:
     print('暂时不支持的类型！')
     exit(-1)
 else:
@@ -67,7 +68,7 @@ def modify_md_file(upload_info, md_code):
 
 
 def doall(md_path):
-    print("开始", md_path)
+    print("\n\n\n开始", md_path)
 
     md_code = Read_File(md_path)
 
