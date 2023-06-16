@@ -2,8 +2,10 @@ import os
 import sys
 
 from MdUtils.File.FilesUtils import read_file
+from MdUtils.File.Mindmap.Xmind import repair_xmind_files
 
 from MdUtils.Parser.Struct.MdStruct import *
+from Utils.Output.todolist.MdTodoList import *
 
 
 def doall(md_path):
@@ -16,7 +18,9 @@ def doall(md_path):
 
     root_node = make_root_node(md_code, filename)
 
-    print(root_node.get_struct_str())
+    print(OutPutTitleTodoList(root_node))
+
+    # print(root_node.get_struct_str())
 
 
 if __name__ == '__main__':
