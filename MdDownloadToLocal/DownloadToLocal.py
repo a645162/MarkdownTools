@@ -56,11 +56,6 @@ def doall(md_path):
 
     download_generate_md(md_path=md_path, md_code=md_code, md_img_download_list=md_img_download_list)
 
-    print()
-
-    # upload_info = upload_pic(md_info=md_info)
-    # modify_md_file(upload_info=upload_info, md_code=md_code)
-
 
 if __name__ == '__main__':
 

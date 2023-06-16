@@ -145,7 +145,7 @@ def restore_string_by_spilt_lines(lines):
     return text.strip()
 
 
-def set_root_node(text, title='', parse_son=True):
+def make_root_node(text, title='', parse_son=True):
     lines = text.split("\n")
 
     inner_text_end = 0
@@ -167,22 +167,21 @@ def set_root_node(text, title='', parse_son=True):
 
 
 def output_struct(node):
+    if node is None:
+        return ""
+
     spaces = " " * node.depth
-    jing = "#" * node.depth
+    hashtags = "#" * node.depth
     title = node.title
     if len(title) == 0:
         title = "[空]"
 
     path = node.get_path_string()
 
-    print(spaces + jing + " " + path + " " + title)
-
-    # if len(node.inner_text) > 0:
-    #     lines = node.inner_text.split("\n")
-    #     for i in lines:
-    #         print(spaces * 2 + " " + i)
-    #     # print(node.inner_text)
+    return_str = spaces + hashtags + " " + path + " " + title + "\n"
 
     # 遍历子节点DFS
     for i in node.son:
-        output_struct(i)
+        return_str += output_struct(i)
+
+    return return_str
