@@ -1,7 +1,7 @@
 import os
 import sys
 
-from Utils.Output.opml.opml import output_opml
+from Utils.Output.opml.opml import output_opml_xmind
 
 from MdUtils.File.FilesUtils import read_file
 from MdUtils.File.Mindmap.Xmind import repair_xmind_files
@@ -20,9 +20,9 @@ def doall(md_path):
 
     root_node = make_root_node(md_code, filename)
 
-    print(OutPutTitleTodoList(root_node))
+    # print(output_md_todolist(root_node))
 
-    output_opml(md_node=root_node, md_path=md_path)
+    # output_opml(md_node=root_node, md_path=md_path)
 
     # print(root_node.get_struct_str())
 

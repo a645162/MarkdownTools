@@ -1,4 +1,4 @@
-def OutPutTitleTodoList(node):
+def output_md_todolist(node):
     re = ""
     spaces = "\t" * node.depth
     # jing = "#" * node.depth
@@ -20,6 +20,6 @@ def OutPutTitleTodoList(node):
 
     # 遍历子节点DFS
     for i in node.sons:
-        re += OutPutTitleTodoList(i)
+        re += output_md_todolist(i)
 
     return re
