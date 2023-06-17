@@ -11,7 +11,7 @@ class MarkdownBlock:
         self.code = code
         self.depth = depth
         self.path = path
-        self.son = []
+        self.sons = []
 
     def parse_son(self):
         if len(self.code) == 0:
@@ -45,7 +45,7 @@ class MarkdownBlock:
                 son_count += 1
                 new_son = \
                     MarkdownBlock(title, inner_text, code, son_level, self.path + str(son_count))
-                self.son.append(new_son)
+                self.sons.append(new_son)
                 new_son.parse_son()
 
         for i in range(0, len(level_list)):
@@ -73,13 +73,13 @@ class MarkdownBlock:
             son_count += 1
             new_son = \
                 MarkdownBlock(title, inner_text, code, son_level, self.path + str(son_count))
-            self.son.append(new_son)
+            self.sons.append(new_son)
             new_son.parse_son()
 
         # code = mkString(lines[end:])
 
     def is_leaf(self):
-        return len(self.son) == 0
+        return len(self.sons) == 0
 
     def get_path_string(self):
         mypath = self.path.strip()

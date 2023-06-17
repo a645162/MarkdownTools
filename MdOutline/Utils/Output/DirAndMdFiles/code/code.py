@@ -64,5 +64,5 @@ def findCCode(node):
             else:
                 pass
 
-    for i in node.son:
+    for i in node.sons:
         findCCode(i)

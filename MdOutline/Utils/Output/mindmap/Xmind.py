@@ -19,7 +19,7 @@ def OutPutTitleTodoList(node):
     re += spaces + jing + " " + path + " " + title + "\n"
 
     # 遍历子节点DFS
-    for i in node.son:
+    for i in node.sons:
         re += OutPutTitleTodoList(i)
 
     return re
