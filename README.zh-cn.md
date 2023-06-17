@@ -4,14 +4,15 @@
 
 Author: Haomin Kong
 
-[GitHub](https://github.com/a645162/MarkdownTools)
-[Gitee](https://gitee.com/a645162/markdown-tools)
+[GitHub 仓库](https://github.com/a645162/MarkdownTools)
+
+[Gitee 仓库(国内访问速度快)](https://gitee.com/a645162/markdown-tools)
 
 ## 功能列表
 
-- 图片上传工具(待完善)
+- 图片上传工具
 - 大纲解析工具+思维导图生成+Todo List生成(待完善)
-- 图片下载工具(待重写，旧的还可以用，不想改了直接重写)
+- 图片下载工具
 
 ### 图片上传工具
 
@@ -23,12 +24,12 @@ Author: Haomin Kong
 
 - [x] 阿里云 OSS
 - [x] 七牛云
-- [ ] 又拍云
 - [ ] 腾讯云 COS
+- [ ] 又拍云
 - [ ] imgur
 - [ ] SM.MS
 
-### 大纲解析工具
+### 大纲解析工具 (目前的工作重心！！！)
 
 解析每一级的标题
 可以导出成 md 格式的 TODO List
@@ -39,10 +40,8 @@ Author: Haomin Kong
 
 ## TODO
 
-- [ ] MD 大纲导出为 Xmind
-- [ ] 完善 MD 大纲导出为 TODO List 功能
-- [ ] 重写 MD 图片下载工具
-- [ ] 完善图片上传工具
+- [ ] 完善 MD 大纲工具(详情请参考其 [README](MdOutline/README.md))
+- [ ] 图片上传工具-添加更多的服务商
 - [ ] GUI 界面
 - [ ] 包自动化构建
 
