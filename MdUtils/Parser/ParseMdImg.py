@@ -1,7 +1,7 @@
 import os
 import re
 
-from MdUtils.File.FilesUtils import Read_File
+from MdUtils.File.FilesUtils import read_file
 from MdUtils.Utils import is_url, backslash_to_slash, correct_slash
 
 
@@ -63,7 +63,7 @@ def parse_md_file_img_upload_list(md_path, md_code, max_parent_level=2):
     md_code = md_code.strip()
 
     if len(md_code) == 0:
-        md_code = Read_File(md_path)
+        md_code = read_file(md_path)
 
     md_file_name = os.path.basename(md_path)
     md_dir_path = os.path.dirname(md_path)
