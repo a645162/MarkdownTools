@@ -1,6 +1,7 @@
 import os
 import sys
 
+from Utils.Output.mindmap.freemind.freemind import output_freemind
 from Utils.Output.opml.opml import output_opml_xmind
 
 from MdUtils.File.FilesUtils import read_file
@@ -20,9 +21,10 @@ def doall(md_path):
 
     root_node = make_root_node(md_code, filename)
 
-    # print(output_md_todolist(root_node))
+    print(output_md_todolist(root_node))
 
     # output_opml(md_node=root_node, md_path=md_path)
+    output_freemind(md_node=root_node, md_path=md_path)
 
     # print(root_node.get_struct_str())
 
