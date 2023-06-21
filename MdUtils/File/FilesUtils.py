@@ -1,6 +1,7 @@
 import os
 import time
 
+import chardet
 
 def read_file(file_path):
     file_encoding = judge_file_encoding(file_path)

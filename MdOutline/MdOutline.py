@@ -1,8 +1,9 @@
 import os
 import sys
 
+from Utils.Output.html.output_html import output_html
 from Utils.Output.mindmap.freemind.freemind import output_freemind
-from Utils.Output.opml.opml import output_opml_xmind
+from Utils.Output.opml.opml import output_opml_xmind, generate_opml_xmind_node
 
 from MdUtils.File.FilesUtils import read_file
 from MdUtils.File.Mindmap.Xmind import repair_xmind_files
@@ -23,8 +24,9 @@ def doall(md_path):
 
     print(output_md_todolist(root_node))
 
-    # output_opml(md_node=root_node, md_path=md_path)
-    output_freemind(md_node=root_node, md_path=md_path)
+    # output_opml_xmind(md_node=root_node, md_path=md_path)
+    # output_freemind(md_node=root_node, md_path=md_path)
+    output_html(md_code=md_code, md_path=md_path)
 
     # print(root_node.get_struct_str())
 
