@@ -8,5 +8,13 @@ xml_code = \
 
 def repair_xmind_files(file_name):
     zip_file = zipfile.ZipFile(file_name, 'a')
-    zip_file.writestr('META-INF/manifest.xml', xml_code.strip())
+    file_list = zip_file.filelist
+    found = False
+    target_file_name = 'META-INF/manifest.xml'
+    for file in file_list:
+        if file.filename == target_file_name:
+            found = True
+            break
+    if not found:
+        zip_file.writestr(target_file_name, xml_code.strip())
     zip_file.close()

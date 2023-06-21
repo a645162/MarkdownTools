@@ -13,6 +13,16 @@ import dominate
 # with open('test.html', 'w') as f:
 #     f.write(doc.render())
 
+def markdown2html_body(md_code):
+    html_code = markdown.markdown(md_code)
+
+    # https://www.cnblogs.com/kidsitcn/p/11381927.html
+    html_code = re.sub(r'<code>', '<pre><code>', html_code)
+    html_code = re.sub(r'</code>', '</code></pre>', html_code)
+
+    return html_code
+
+
 def output_html(md_code, md_path=''):
     md_path = md_path.strip()
 
@@ -56,13 +66,10 @@ def output_html(md_code, md_path=''):
 
     html_body.add(md2html_body)
 
-    html_body_text = markdown.markdown(md_code)
+    html_body_text = markdown2html_body(md_code)
 
     final_html_code = html_document.render(pretty=True)
     final_html_code = final_html_code.replace(replace_text, "\n" + html_body_text + "\n")
-
-    final_html_code = re.sub(r'<code>', '<pre><code>', final_html_code)
-    final_html_code = re.sub(r'</code>', '</code></pre>', final_html_code)
 
     f = open(save_path, "w", encoding='utf-8')
     f.write(final_html_code)

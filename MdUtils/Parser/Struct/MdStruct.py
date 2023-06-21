@@ -13,6 +13,9 @@ class MarkdownBlock:
         self.path = path
         self.sons = []
 
+    def is_inner_text_empty(self):
+        return len(self.inner_text.strip()) == 0
+
     def parse_son(self):
         if len(self.code) == 0:
             return
@@ -88,6 +91,20 @@ class MarkdownBlock:
             re += "." + i
 
         return re[1:]
+
+    def get_path_title(self):
+        mypath = self.path.strip()
+        re = ""
+        for i in mypath:
+            re += "." + i
+
+        path_str = re[1:]
+        if len(self.title) > 0:
+            title_str = " " + self.title
+        else:
+            title_str = ""
+
+        return path_str + title_str
 
     def get_struct_str(self):
         return output_struct(self)
