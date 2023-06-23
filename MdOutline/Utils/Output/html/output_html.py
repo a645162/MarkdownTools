@@ -20,7 +20,7 @@ def markdown2html_body(md_code):
     html_code = re.sub(r'<code>', '<pre><code>', html_code)
     html_code = re.sub(r'</code>', '</code></pre>', html_code)
 
-    return html_code
+    return html_code.strip()
 
 
 def output_html(md_code, md_path=''):

@@ -8,27 +8,6 @@ from ...html.output_html import markdown2html_body
 from MdUtils.File.Mindmap.Xmind import repair_xmind_files
 
 
-def OutPutTitleTodoList(node):
-    re = ""
-    spaces = "\t" * node.depth
-    # jing = "#" * node.depth
-    jing = "- [ ]"
-
-    title = node.title
-    if len(title) == 0:
-        title = "[空]"
-
-    path = node.get_path_string()
-
-    re += spaces + jing + " " + path + " " + title + "\n"
-
-    # 遍历子节点DFS
-    for i in node.sons:
-        re += OutPutTitleTodoList(i)
-
-    return re
-
-
 def mk_xmind_node(md_node, xmind_parent_node):
     sub_xmind_node = xmind_parent_node.addSubTopic()
     sub_xmind_node.setTitle(md_node.get_path_title())

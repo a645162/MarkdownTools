@@ -8,6 +8,7 @@ from xml.etree.ElementTree import SubElement
 from xml.etree.ElementTree import ElementTree
 import xml.etree.ElementTree as et
 
+from ...html.output_html import markdown2html_body
 from MdUtils.Formater.xml import pretty_xml
 
 import markdown as markdown2html
@@ -22,9 +23,6 @@ def get_freemind_time_str(target_time):
 
 
 def generate_freemind_node(md_node, xml_parent_node, time_str):
-    title = md_node.title.strip()
-    path = md_node.get_path_string()
-
     this_xml_node = SubElement(xml_parent_node, 'node')
 
     this_xml_node.set('CREATED', time_str)
@@ -33,16 +31,14 @@ def generate_freemind_node(md_node, xml_parent_node, time_str):
 
     this_xml_node.set('MODIFIED', time_str)
 
-    if len(title) > 0:
-        title = " " + title
-    this_xml_node.set('TEXT', path + title)
+    this_xml_node.set('TEXT', md_node.get_path_title())
 
     # rich_content = SubElement(this_xml_node, 'richcontent')
     # rich_content.set('TYPE', 'NOTE')
     # SubElement(rich_content, 'head')
     # SubElement(rich_content, 'body').text = '<111&111>'
 
-    if len(md_node.inner_text.strip()) > 0:
+    if not md_node.is_inner_text_empty():
 
         md_code = md_node.inner_text
 
@@ -51,7 +47,7 @@ def generate_freemind_node(md_node, xml_parent_node, time_str):
         md_code = re.sub('<', '&lt;', md_code)
         md_code = re.sub('>', '&gt;', md_code)
 
-        body_code = str(markdown2html.markdown(md_code)).strip()
+        body_code = markdown2html_body(md_code)
 
         if len(body_code) > 0:
             rich_content = SubElement(this_xml_node, 'richcontent')

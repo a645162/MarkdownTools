@@ -9,23 +9,19 @@ from xml.etree.ElementTree import ElementTree
 
 from xml.dom import minidom
 
+from ..html.output_html import markdown2html_body
 from ..inner_text import get_inner_text
 from MdUtils.Formater.xml import pretty_xml
 
 
 def generate_opml_xmind_node(md_node, xml_parent_node):
-    title = md_node.title.strip()
-    path = md_node.get_path_string()
-
     this_xml_node = SubElement(xml_parent_node, 'outline')
 
-    if len(title) > 0:
-        title = " " + title
-    this_xml_node.set('text', path + title)
+    this_xml_node.set('text', md_node.get_path_title())
 
     inner_text = get_inner_text(md_node=md_node, remove_blank_lines=True)
-    if len(inner_text.strip()) > 0:
-        this_xml_node.set('_note', inner_text)
+    if not md_node.is_inner_text_empty():
+        this_xml_node.set('_note', markdown2html_body(inner_text))
 
     # 遍历子节点 DFS
     for i in md_node.sons:

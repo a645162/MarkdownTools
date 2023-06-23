@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 
+import re
+
 from xml.etree import ElementTree  # 导入ElementTree模块
 
 
@@ -35,3 +37,14 @@ def pretty_exist_xml_file(file_name):
     # ElementTree.dump(root)                 #显示出美化后的XML内容
 
     tree.write(file_name, encoding='utf-8')
+
+
+def replace_reserved_word(text):
+    text = re.sub('&', '&amp;', text)
+
+    text = re.sub('<', '&lt;', text)
+    text = re.sub('>', '&gt;', text)
+
+    
+
+    return text
