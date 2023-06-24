@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <map version="1.0.1">
-	<node CREATED="1687498937024" ID="b681b9ce-1188-11ee-ada4-34c93d029fa3" MODIFIED="1687498937024" TEXT=" 树.md">
-		<node CREATED="1687498937024" ID="b681e0c4-1188-11ee-acac-34c93d029fa3" MODIFIED="1687498937024" TEXT="1 树">
-			<node CREATED="1687498937024" ID="b681e0c5-1188-11ee-a2d6-34c93d029fa3" MODIFIED="1687498937024" TEXT="1.1 &quot;概念？&quot; '概念！'">
+	<node CREATED="1687610461759" ID="606dce82-128c-11ee-bc93-34c93d029fa3" MODIFIED="1687610461759" TEXT=" 树.md">
+		<node CREATED="1687610461759" ID="606e096e-128c-11ee-ad70-34c93d029fa3" MODIFIED="1687610461759" TEXT="1 树">
+			<node CREATED="1687610461759" ID="606e096f-128c-11ee-a5c9-34c93d029fa3" MODIFIED="1687610461759" TEXT="1.1 &quot;概念？&quot; '概念！'">
 				<richcontent TYPE="NOTE">
 					<head />
 					<body>
@@ -10,7 +10,7 @@
 					</body>
 				</richcontent>
 			</node>
-			<node CREATED="1687498937024" ID="b68207b7-1188-11ee-b94b-34c93d029fa3" MODIFIED="1687498937024" TEXT="1.2 测试">
+			<node CREATED="1687610461759" ID="606e0970-128c-11ee-8a20-34c93d029fa3" MODIFIED="1687610461759" TEXT="1.2 测试">
 				<richcontent TYPE="NOTE">
 					<head />
 					<body>
@@ -51,8 +51,8 @@
 					</body>
 				</richcontent>
 			</node>
-			<node CREATED="1687498937024" ID="b683535a-1188-11ee-9768-34c93d029fa3" MODIFIED="1687498937024" TEXT="1.3 概念">
-				<node CREATED="1687498937024" ID="b683535b-1188-11ee-b881-34c93d029fa3" MODIFIED="1687498937024" TEXT="1.3.1 树、有序树、二叉树区别">
+			<node CREATED="1687610461759" ID="606e5f10-128c-11ee-8a33-34c93d029fa3" MODIFIED="1687610461759" TEXT="1.3 概念">
+				<node CREATED="1687610461759" ID="606e5f11-128c-11ee-8855-34c93d029fa3" MODIFIED="1687610461759" TEXT="1.3.1 树、有序树、二叉树区别">
 					<richcontent TYPE="NOTE">
 						<head />
 						<body>
@@ -64,7 +64,7 @@
 							</p>
 						</body>
 					</richcontent>
-					<node CREATED="1687498937024" ID="b6837a5e-1188-11ee-83fc-34c93d029fa3" MODIFIED="1687498937024" TEXT="1.3.1.1 树">
+					<node CREATED="1687610461759" ID="606e5f12-128c-11ee-8e18-34c93d029fa3" MODIFIED="1687610461759" TEXT="1.3.1.1 树">
 						<richcontent TYPE="NOTE">
 							<head />
 							<body>
@@ -72,7 +72,7 @@
 							</body>
 						</richcontent>
 					</node>
-					<node CREATED="1687498937024" ID="b6837a5f-1188-11ee-8567-34c93d029fa3" MODIFIED="1687498937024" TEXT="1.3.1.2 有序树">
+					<node CREATED="1687610461759" ID="606e5f13-128c-11ee-a8e7-34c93d029fa3" MODIFIED="1687610461759" TEXT="1.3.1.2 有序树">
 						<richcontent TYPE="NOTE">
 							<head />
 							<body>
@@ -80,7 +80,7 @@
 							</body>
 						</richcontent>
 					</node>
-					<node CREATED="1687498937024" ID="b683a14d-1188-11ee-add8-34c93d029fa3" MODIFIED="1687498937024" TEXT="1.3.1.3 二叉树">
+					<node CREATED="1687610461759" ID="606e85ff-128c-11ee-a4e9-34c93d029fa3" MODIFIED="1687610461759" TEXT="1.3.1.3 二叉树">
 						<richcontent TYPE="NOTE">
 							<head />
 							<body>
@@ -92,7 +92,7 @@
 						</richcontent>
 					</node>
 				</node>
-				<node CREATED="1687498937024" ID="b683a14e-1188-11ee-9d9c-34c93d029fa3" MODIFIED="1687498937024" TEXT="1.3.2 某个结点祖先">
+				<node CREATED="1687610461759" ID="606e8600-128c-11ee-b532-34c93d029fa3" MODIFIED="1687610461759" TEXT="1.3.2 某个结点祖先">
 					<richcontent TYPE="NOTE">
 						<head />
 						<body>
@@ -101,7 +101,7 @@
 					</richcontent>
 				</node>
 			</node>
-			<node CREATED="1687498937024" ID="b683c839-1188-11ee-929a-34c93d029fa3" MODIFIED="1687498937024" TEXT="1.4 树的存储结构">
+			<node CREATED="1687610461759" ID="606e8601-128c-11ee-ac3e-34c93d029fa3" MODIFIED="1687610461759" TEXT="1.4 树的存储结构">
 				<richcontent TYPE="NOTE">
 					<head />
 					<body>
@@ -113,7 +113,7 @@
 						</p>
 					</body>
 				</richcontent>
-				<node CREATED="1687498937024" ID="b683ef40-1188-11ee-846b-34c93d029fa3" MODIFIED="1687498937024" TEXT="1.4.1 孩子兄弟表示法(二叉链表)">
+				<node CREATED="1687610461759" ID="606eacf1-128c-11ee-850d-34c93d029fa3" MODIFIED="1687610461759" TEXT="1.4.1 孩子兄弟表示法(二叉链表)">
 					<richcontent TYPE="NOTE">
 						<head />
 						<body>
@@ -134,7 +134,7 @@ typedef struct CSNode{
 						</body>
 					</richcontent>
 				</node>
-				<node CREATED="1687498937024" ID="b6842a38-1188-11ee-8d2f-34c93d029fa3" MODIFIED="1687498937024" TEXT="1.4.2 资料">
+				<node CREATED="1687610461759" ID="606ed3e6-128c-11ee-92a8-34c93d029fa3" MODIFIED="1687610461759" TEXT="1.4.2 资料">
 					<richcontent TYPE="NOTE">
 						<head />
 						<body>
@@ -143,8 +143,8 @@ typedef struct CSNode{
 					</richcontent>
 				</node>
 			</node>
-			<node CREATED="1687498937024" ID="b6845229-1188-11ee-b199-34c93d029fa3" MODIFIED="1687498937024" TEXT="1.5 树的遍历">
-				<node CREATED="1687498937024" ID="b684522a-1188-11ee-bc22-34c93d029fa3" MODIFIED="1687498937024" TEXT="1.5.1 树的层次遍历">
+			<node CREATED="1687610461759" ID="606ed3e7-128c-11ee-b1bb-34c93d029fa3" MODIFIED="1687610461759" TEXT="1.5 树的遍历">
+				<node CREATED="1687610461759" ID="606ed3e8-128c-11ee-82cd-34c93d029fa3" MODIFIED="1687610461759" TEXT="1.5.1 树的层次遍历">
 					<richcontent TYPE="NOTE">
 						<head />
 						<body>
@@ -179,8 +179,8 @@ nodeQueue.pop();                               // 头结点出队
 						</body>
 					</richcontent>
 				</node>
-				<node CREATED="1687498937024" ID="b685ebbc-1188-11ee-855b-34c93d029fa3" MODIFIED="1687498937024" TEXT="1.5.2 特殊的遍历序列">
-					<node CREATED="1687498937024" ID="b685ebbd-1188-11ee-93b9-34c93d029fa3" MODIFIED="1687498937024" TEXT="1.5.2.1 后序遍历序列与中序遍历序列">
+				<node CREATED="1687610461759" ID="606efae5-128c-11ee-b4ed-34c93d029fa3" MODIFIED="1687610461759" TEXT="1.5.2 特殊的遍历序列">
+					<node CREATED="1687610461759" ID="606efae6-128c-11ee-b144-34c93d029fa3" MODIFIED="1687610461759" TEXT="1.5.2.1 后序遍历序列与中序遍历序列">
 						<richcontent TYPE="NOTE">
 							<head />
 							<body>
@@ -192,7 +192,7 @@ nodeQueue.pop();                               // 头结点出队
 							</body>
 						</richcontent>
 					</node>
-					<node CREATED="1687498937024" ID="b68612e4-1188-11ee-b03f-34c93d029fa3" MODIFIED="1687498937024" TEXT="1.5.2.2 先序遍历序列与中序遍历序列相同">
+					<node CREATED="1687610461759" ID="606efae7-128c-11ee-a7a2-34c93d029fa3" MODIFIED="1687610461759" TEXT="1.5.2.2 先序遍历序列与中序遍历序列相同">
 						<richcontent TYPE="NOTE">
 							<head />
 							<body>
@@ -202,7 +202,7 @@ nodeQueue.pop();                               // 头结点出队
 					</node>
 				</node>
 			</node>
-			<node CREATED="1687498937024" ID="b68639ee-1188-11ee-977c-34c93d029fa3" MODIFIED="1687498937024" TEXT="1.6 m叉树">
+			<node CREATED="1687610461759" ID="606f21dd-128c-11ee-8258-34c93d029fa3" MODIFIED="1687610461759" TEXT="1.6 m叉树">
 				<richcontent TYPE="NOTE">
 					<head />
 					<body>
@@ -226,7 +226,7 @@ N₀+N₁+N₂+N₃......Nм = N₁+2N₂+3N₃......mNм + 1</p>
 					</body>
 				</richcontent>
 			</node>
-			<node CREATED="1687498937024" ID="b686aeb9-1188-11ee-bec4-34c93d029fa3" MODIFIED="1687498937024" TEXT="1.7 典型题">
+			<node CREATED="1687610461759" ID="606f21de-128c-11ee-a51f-34c93d029fa3" MODIFIED="1687610461759" TEXT="1.7 典型题">
 				<richcontent TYPE="NOTE">
 					<head />
 					<body>
@@ -292,8 +292,8 @@ $n_0=1+n_2=16$
 				</richcontent>
 			</node>
 		</node>
-		<node CREATED="1687498937024" ID="b6882867-1188-11ee-9d9f-34c93d029fa3" MODIFIED="1687498937024" TEXT="2 图" />
-		<node CREATED="1687498937024" ID="b6884f6a-1188-11ee-881f-34c93d029fa3" MODIFIED="1687498937024" TEXT="3 搜索" />
-		<node CREATED="1687498937024" ID="b6884f6b-1188-11ee-ab2d-34c93d029fa3" MODIFIED="1687498937024" TEXT="4 排序" />
+		<node CREATED="1687610461759" ID="606f6fc6-128c-11ee-9717-34c93d029fa3" MODIFIED="1687610461759" TEXT="2 图" />
+		<node CREATED="1687610461759" ID="606f6fc7-128c-11ee-9e92-34c93d029fa3" MODIFIED="1687610461759" TEXT="3 搜索" />
+		<node CREATED="1687610461759" ID="606f6fc8-128c-11ee-878c-34c93d029fa3" MODIFIED="1687610461759" TEXT="4 排序" />
 	</node>
 </map>

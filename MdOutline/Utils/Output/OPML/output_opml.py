@@ -34,7 +34,7 @@ def output_opml_xmind(md_node, md_path=''):
     if len(md_path) == 0:
         save_path = 'result.xml'
     else:
-        save_path = md_path + ".opml.xml"
+        save_path = md_path + ".xmind.opml"
 
     # md_dir=os.path.dirname(md_path)
 

@@ -14,8 +14,7 @@ Md 结构解析工具已经完成！
 
 #### Xmind
 
-方案基本敲定，准备开发，不过目前可以使用 opml 文件直接导入，而且支持的比较完美！
-鉴于目前可以通过 opml 的方法导入，因此，原生 xmind 的方案暂时搁置！
+目前支持原生的 Xmind 方案，以及 OPML 方案，均比较完美！
 
 这里没有使用现有库 md2xmind 因为其识别的结果问题很大，
 比如如果一级标题在更低级标题下面，那么识别会出现大错误，
@@ -36,17 +35,24 @@ FreePlane 与 Freemind 界面基本相同，
 仅仅是因为 Freemind 的 mm 格式文件不包含 style 信息，
 您重新另存为的过程中 FreePlane 会自动添加这些信息！
 
+### MindManager
+
+应该是永远都不会考虑原生适配 MindManager！
+目前正在努力适配 MindManager 的 OPML 格式！
+
 ### OPML
 
-目前生成的 OPML 文件仅支持 xmind 导入！
+目前生成的 OPML 文件仅支持 Xmind 导入！
 
-MindManager 界面我也挺喜欢的，但是用户比较少，而且格式比较复杂，至少很长一段时间不会去适配！
+MindManager 界面我也挺喜欢的，目前正在尝试适配！
 
 ### HTML
 
 代码部分不太完美，找一找有没有更好的轮子~
 
 ## 等待评估
+
+或许，会拖到 9 月份我研一开学！
 
 - [ ] OmniOutliner
 - [ ] iThoughts

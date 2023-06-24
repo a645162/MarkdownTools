@@ -1,6 +1,7 @@
 import os
 import sys
 
+from Utils.Output.mindmap.mindmanager.output_mindmanager import output_mindmanager
 from Utils.Output.mindmap.xmind.output_xmind import output_xmind
 from Utils.Output.html.output_html import output_html
 from Utils.Output.mindmap.freemind.output_freemind import output_freemind
@@ -29,6 +30,7 @@ def doall(md_path):
     output_freemind(md_node=root_node, md_path=md_path)
     output_html(md_code=md_code, md_path=md_path)
     output_xmind(md_node=root_node, md_path=md_path)
+    output_mindmanager(md_node=root_node, md_path=md_path)
 
     # print(root_node.get_struct_str())
 
