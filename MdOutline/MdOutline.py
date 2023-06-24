@@ -1,10 +1,10 @@
 import os
 import sys
 
-from Utils.Output.mindmap.xmind.Xmind import output_xmind
+from Utils.Output.mindmap.xmind.output_xmind import output_xmind
 from Utils.Output.html.output_html import output_html
-from Utils.Output.mindmap.freemind.freemind import output_freemind
-from Utils.Output.opml.opml import output_opml_xmind, generate_opml_xmind_node
+from Utils.Output.mindmap.freemind.output_freemind import output_freemind
+from Utils.Output.opml.output_opml import output_opml_xmind, generate_opml_xmind_node
 
 from MdUtils.File.FilesUtils import read_file
 from MdUtils.File.Mindmap.Xmind import repair_xmind_files
