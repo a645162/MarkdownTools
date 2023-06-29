@@ -50,7 +50,7 @@ def init_dictionary():
 init_dictionary()
 
 
-def replace_hold_text(text):
+def replace_hold_text(text, user_replace_list=None):
     user_name = getpass.getuser()
     date_time = time.strftime('%Y.%m.%d', time.localtime(time.time()))
 
@@ -59,6 +59,10 @@ def replace_hold_text(text):
 
     for replace_tuple in replace_dictionary:
         text = regex.sub(replace_tuple[0], replace_tuple[1], text)
+
+    if user_replace_list is not None:
+        for replace_tuple in user_replace_list:
+            text = regex.sub(str(replace_tuple[0]), str(replace_tuple[1]), text)
 
     return text
 
@@ -89,24 +93,24 @@ class SlidevMD:
 
         self.slidev_settings = slidev_settings
 
-    def add_page(self, md_code, template_code=""):
+    def add_page(self, md_code, template_code="", user_replace_list=None):
         template_code = template_code.strip()
         md_code = md_code.strip()
 
         if len(template_code) == 0:
             final_code = md_code
         else:
-            final_code = template_code.replace(replace_text_md_main, "\n{}\n".format(md_code))
+            final_code = template_code.replace(replace_text_md_main, md_code)
 
-        final_code = replace_hold_text(final_code)
+        final_code = replace_hold_text(final_code, user_replace_list)
 
         self.pages.append(final_code)
         self.page_count += 1
 
-    def include_files(self, files_path, template_path=None, replace=None):
+    def include_files(self, files_path, template_path=None, user_replace_list=None):
 
-        if replace is None:
-            replace = []
+        if user_replace_list is None:
+            user_replace_list = []
 
         if type(files_path) == str:
             files_path = [files_path]
@@ -120,7 +124,7 @@ class SlidevMD:
             with open(file) as f:
                 file_code = f.read().strip()
 
-                self.add_page(file_code, template_code=template_code)
+                self.add_page(file_code, template_code=template_code, user_replace_list=user_replace_list)
 
     def generate_code(self):
         self.MD_Code = ""
@@ -140,7 +144,7 @@ class SlidevMD:
         for i in range(1, len(self.pages)):
             page_code = self.pages[i]
 
-            self.MD_Code += "\n---\n"
+            self.MD_Code += "\n\n---\n\n"
             self.MD_Code += page_code
 
     def save_to_file(self, path):

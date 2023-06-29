@@ -18,7 +18,9 @@ s1.include_files(
 s1.include_files(
     r'H:\Prj\MarkdownTools\Presentation\SlidevTools\example\workdir\page1.md',
     r'H:\Prj\MarkdownTools\Presentation\SlidevTools\example\template\apple\page_template1.md',
-    []
+    [
+        [1, '2']
+    ]
 )
 
 s1.generate_code()

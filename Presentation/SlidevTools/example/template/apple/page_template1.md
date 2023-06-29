@@ -1,3 +1,6 @@
+---
+layout: intro
+---
 
 page_template1
 

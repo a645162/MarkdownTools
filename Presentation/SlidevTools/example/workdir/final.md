@@ -13,14 +13,23 @@ Presentation subtitle
     Haomin Kong 2023.06.29
   </span>
 </div>
----
-page_template1
 
+---
+
+---
+layout: intro
+---
+
+page_template1
 
 this is page 1
 
 ---
-page_template1
 
+---
+layout: intro
+---
 
-this is page 1
+page_template2
+
+this is page 2
