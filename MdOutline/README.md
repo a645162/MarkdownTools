@@ -50,12 +50,17 @@ MindManager 界面我也挺喜欢的，目前正在尝试适配！
 
 代码部分不太完美，找一找有没有更好的轮子~
 
-## 等待评估
+### LaTeX
+
+目前还没有敲定方案，但是计划是已经有了的！
+
+## 等待评估(可能会支持，也有可能永远不会)
 
 或许，会拖到 9 月份我研一开学！
 
-- [ ] OmniOutliner
+- [ ] OmniOutliner(Omni 系列效率软件)
 - [ ] iThoughts
+- [ ] MindNode
 - [ ] DEVONthink
 - [ ] Anki
 

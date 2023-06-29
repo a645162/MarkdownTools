@@ -8,3 +8,4 @@
 - [ ] 4 又拍云
 - [ ] 5 imgur
 - [ ] 6 SM.MS
+- [ ] 7 Webdav
