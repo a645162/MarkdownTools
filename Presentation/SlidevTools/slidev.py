@@ -81,8 +81,6 @@ class SlidevMD:
             self.slidev_settings_md_path = slidev_settings_md.strip()
             with open(self.slidev_settings_md_path) as f:
                 self.MD_Code += f.read().strip() + "\n"
-
-
         else:
             self.slidev_settings_md_path = ""
 
@@ -136,7 +134,7 @@ class SlidevMD:
                 page1 = page1[4:].strip()
                 settings_str = self.slidev_settings[:-3].strip()
 
-                self.MD_Code += settings_str + "\n\n" + page1
+                self.MD_Code += settings_str + "\n\n" + page1 + "\n"
             else:
                 self.MD_Code += self.slidev_settings
                 self.MD_Code += page1
@@ -151,7 +149,17 @@ class SlidevMD:
 
             self.MD_Code += page_code + '\n'
 
-    def save_to_file(self, path):
+    def copy_page(self, page_index=None):
+        if page_index is None:
+            page_index = len(self.pages) - 1
+
+        self.pages.append(self.pages[page_index])
+
+    def save_to_file(self, path, auto_run=False):
         f = open(path, 'w', encoding='utf-8')
         f.write(self.MD_Code.strip())
         f.close()
+
+        if auto_run:
+            # TODO: AUTORUN
+            pass
