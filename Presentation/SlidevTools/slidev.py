@@ -142,10 +142,14 @@ class SlidevMD:
                 self.MD_Code += page1
 
         for i in range(1, len(self.pages)):
-            page_code = self.pages[i]
+            page_code = self.pages[i].strip()
 
-            self.MD_Code += "\n\n---\n\n"
-            self.MD_Code += page_code
+            if page_code.startswith('---\n'):
+                self.MD_Code += '\n'
+            else:
+                self.MD_Code += "\n---\n\n"
+
+            self.MD_Code += page_code + '\n'
 
     def save_to_file(self, path):
         f = open(path, 'w', encoding='utf-8')
