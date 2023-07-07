@@ -12,6 +12,7 @@ class MarkdownBlock:
         self.depth = depth
         self.path = path
         self.sons = []
+        self.next_sibling = None
 
     def is_inner_text_empty(self):
         return len(self.inner_text.strip()) == 0
@@ -79,7 +80,16 @@ class MarkdownBlock:
             self.sons.append(new_son)
             new_son.parse_son()
 
+        self.update_siblings()
         # code = mkString(lines[end:])
+
+    def update_siblings(self):
+        count = len(self.sons)
+        for i in range(count):
+            if i == count - 1:
+                self.sons[i].next_sibling = None
+            else:
+                self.sons[i].next_sibling = self.sons[i + 1]
 
     def is_leaf(self):
         return len(self.sons) == 0
